@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6fa">
+  <meta name="description" content="SPX market context and trading-discipline dashboard with market hours, news, and 0DTE rules.">
+  <title>SPX Discipline Desk</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">SPX</div>
+        <div><div class="brand-name">Discipline Desk</div><div class="eyebrow">Market context · Process over impulse</div></div>
+      </div>
+      <div class="clock"><span>Pacific clock · PST/PDT aware</span><strong id="clock">--:--:--</strong><span id="date">Loading date…</span></div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-head">
+        <div>
+          <div class="eyebrow">Daily market brief</div>
+          <h1>Read the market.<br>Protect your next day.</h1>
+          <p class="subtitle">SPX session timing, major headlines, and guardrails to stop one emotional trade from becoming a terrible day.</p>
+        </div>
+        <div class="pill"><span class="dot"></span><span id="session-label">Checking market session…</span></div>
+      </div>
+
+      <div class="countdown-grid">
+        <article class="countdown-card featured">
+          <div class="countdown-label">Market status · New York time</div>
+          <div class="countdown-value" id="market-status">CHECKING…</div>
+          <div class="countdown-sub" id="market-status-detail">Calculating regular-session hours</div>
+        </article>
+        <article class="countdown-card">
+          <div class="countdown-label" id="countdown-title">Time until market close</div>
+          <div class="countdown-value timer" id="close-countdown">--:--:--</div>
+          <div class="countdown-sub" id="close-detail">NYSE / Cboe regular session</div>
+        </article>
+        <article class="countdown-card">
+          <div class="countdown-label">Next regular open</div>
+          <div class="countdown-value timer" id="open-countdown">--:--:--</div>
+          <div class="countdown-sub" id="open-detail">Countdown in Pacific time</div>
+        </article>
+      </div>
+      <div class="notice"><strong>Data honesty:</strong> Countdown uses the standard US equity session (9:30 AM–4:00 PM New York time), weekends, and a built-in US market-holiday calendar. It is a helpful calendar estimate, not an exchange-status feed. Verify early closes and unusual closures with the exchange.</div>
+      <div class="ticker" aria-label="Market and discipline ticker">
+        <div class="ticker-track">
+          <span><b>SPX</b> Confirm the opening range before forming a bias</span><span>•</span>
+          <span><b>0DTE</b> Time decay never takes lunch</span><span>•</span>
+          <span><b>RISK</b> No averaging down</span><span>•</span>
+          <span><b>RULE</b> Target reached means session locked</span><span>•</span>
+          <span><b>NEWS</b> Verify claims with primary sources</span><span>•</span>
+          <span><b>SPX</b> Confirm the opening range before forming a bias</span><span>•</span>
+          <span><b>0DTE</b> Time decay never takes lunch</span><span>•</span>
+          <span><b>RISK</b> No averaging down</span><span>•</span>
+          <span><b>RULE</b> Target reached means session locked</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="sidebar panel">
+        <div class="panel-title"><div><div class="eyebrow">0DTE rules</div><h2>Keep these visible</h2></div><span class="pill">Risk first</span></div>
+        <div class="rule-note"><b>1. One or two trades, max</b><p>Do not keep clicking to force a green day. Stop when your planned trade limit is reached.</p></div>
+        <div class="rule-note"><b>2. Never average down</b><p>No adding to a losing contract. Define the exit before entry. A cheap option can still go to zero.</p></div>
+        <div class="rule-note"><b>3. No FOMO or revenge</b><p>If you missed the move, let it go. After a loss, do not trade to win the money back.</p></div>
+        <div class="rule-note"><b>4. Sideways = stand aside</b><p>Repeated VWAP crosses and overlapping candles can burn premium while price goes nowhere.</p></div>
+        <div class="rule-note"><b>5. Respect the clock</b><p>0DTE options lose time value quickly near expiration. Avoid holding and hoping. Know the product's settlement and expiration details.</p></div>
+        <div class="rule-note"><b>6. Daily target reached?</b><p>Manage/close positions according to your plan, verify you are flat, lock the session, and leave the screen.</p></div>
+        <div class="sidebar-callout">You have another trading day. Protect your capital and your attention.</div>
+        <p class="muted tiny">Educational guardrails only. They do not guarantee profit or cap losses at the displayed amount.</p>
+      </aside>
+
+      <div class="main-column">
+        <section class="panel">
+          <div class="panel-title"><div><div class="eyebrow">Index overview</div><h2>SPX session map</h2></div><span class="state wait" id="trend-state">UNCERTAIN</span></div>
+          <div class="market-grid">
+            <div class="metric"><div class="metric-label">SPX reference</div><div class="metric-value" id="spx-price">—</div><div class="metric-foot">Manual entry · no live feed</div></div>
+            <div class="metric"><div class="metric-label">Opening range high</div><div class="metric-value" id="or-high-display">—</div><div class="metric-foot">First 15-minute high</div></div>
+            <div class="metric"><div class="metric-label">Opening range low</div><div class="metric-value" id="or-low-display">—</div><div class="metric-foot">First 15-minute low</div></div>
+          </div>
+          <div class="inputs">
+            <div class="field"><label for="price">Current SPX value (manual)</label><input id="price" type="number" step="0.01" placeholder="e.g. 6800.25"></div>
+            <div class="field"><label for="vwap">VWAP (manual)</label><input id="vwap" type="number" step="0.01" placeholder="e.g. 6798.50"></div>
+            <div class="field"><label for="or-high">Opening-range high</label><input id="or-high" type="number" step="0.01" placeholder="First 15m high"></div>
+            <div class="field"><label for="or-low">Opening-range low</label><input id="or-low" type="number" step="0.01" placeholder="First 15m low"></div>
+          </div>
+          <div class="controls"><button class="btn primary" id="classify">Review market state</button><button class="btn" id="save-review">Log 5-minute review</button><button class="btn" id="reset-market">Reset market inputs</button></div>
+          <div class="range-note" id="market-explanation">Enter price, VWAP and opening-range levels. The prototype uses simple context checks, not live prices or trade-entry signals.</div>
+          <div class="status-line" id="review-count">Reviews logged: 0 · Last review: not yet</div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title"><div><div class="eyebrow">Your guardrails</div><h2>Discipline check</h2></div><span class="pill">No revenge trades</span></div>
+          <div class="inputs">
+            <div class="field"><label for="profit-goal">Daily profit stop ($)</label><input id="profit-goal" type="number" value="1000" min="1"></div>
+            <div class="field"><label for="loss-limit">Daily loss stop ($)</label><input id="loss-limit" type="number" value="300" min="1"></div>
+            <div class="field"><label for="pnl">Realized daily P&amp;L ($)</label><input id="pnl" type="number" value="0" step="0.01"></div>
+            <div class="field"><label for="trades">Trades taken</label><select id="trades"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4+</option></select></div>
+          </div>
+          <div class="rules">
+            <div class="rule"><input type="checkbox" id="sideways"><label for="sideways">Sideways or conflicting signals<span>Stand aside. No forced setup.</span></label></div>
+            <div class="rule"><input type="checkbox" id="fomo"><label for="fomo">FOMO / chasing a candle<span>Wait for a fresh, confirmed setup.</span></label></div>
+            <div class="rule"><input type="checkbox" id="revenge"><label for="revenge">Trying to win back a loss<span>Close the platform and reset.</span></label></div>
+            <div class="rule"><input type="checkbox" id="average"><label for="average">Thinking about averaging down<span>Do not add to a losing position.</span></label></div>
+            <div class="rule"><input type="checkbox" id="lunch"><label for="lunch">Midday, no clean momentum<span>Protect capital from low-quality entries and time decay.</span></label></div>
+          </div>
+          <div class="coach" id="coach"><strong>WAIT FOR CONFIRMATION</strong><p>Follow the plan. A market opinion is not a trade signal.</p></div>
+          <div class="lock-overlay" id="lock-message" role="status"></div>
+          <div class="controls"><button class="btn primary" id="check-discipline">Run discipline check</button><button class="btn danger" id="unlock-session">Reset daily lock (intentional)</button></div>
+          <div class="status-line" id="next-prompt">10-minute discipline check runs while this page is open.</div>
+        </section>
+      </div>
+    </div>
+
+    <section class="panel news-panel">
+      <div class="panel-title">
+        <div><div class="eyebrow">Headlines & source links</div><h2>SPX · Trump / Washington · Major news</h2><div class="muted small">Readable summaries and links to full publisher coverage. “Age” is shown only when a real publication timestamp is available.</div></div>
+        <div class="news-tools"><input id="news-filter" type="search" placeholder="Filter headlines…"><button class="btn" id="refresh-news">Reload source links</button></div>
+      </div>
+      <div class="news-notice"><b>Live-feed status:</b> This ZIP works without API keys and does not invent breaking headlines or “minutes ago” timestamps. These are stable source links with editorial descriptions. A real feed needs an authorized news API or a backend RSS proxy; browser-only RSS calls are often blocked by CORS.</div>
+      <div class="news-list" id="news-list">
+        <article class="news-item"><div class="news-source">US markets</div><div><h3>Reuters · Markets</h3><p>Follow US equities, S&amp;P 500 moves, Treasury yields, Federal Reserve expectations, earnings, commodities and geopolitical developments. Use the article timestamp and original reporting to assess what is genuinely new.</p><a href="https://www.reuters.com/markets/" target="_blank" rel="noopener noreferrer">Read Reuters Markets coverage ↗</a><div class="news-meta">Publisher page · Live publication times shown on source</div></div></article>
+        <article class="news-item"><div class="news-source">Stocks</div><div><h3>CNBC · Markets</h3><p>Market wrap-ups, intraday index context, company news and economic data. Check whether a headline is already reflected in price and whether the index confirms the move.</p><a href="https://www.cnbc.com/markets/" target="_blank" rel="noopener noreferrer">Read CNBC Markets coverage ↗</a><div class="news-meta">Publisher page · Open for latest stories</div></div></article>
+        <article class="news-item"><div class="news-source">Trump / policy</div><div><h3>The White House · Briefings and statements</h3><p>Primary-source statements on executive actions, trade policy, tariffs, international affairs and administration announcements. For a policy headline, compare the original statement with market-news interpretation before reacting.</p><a href="https://www.whitehouse.gov/briefings-statements/" target="_blank" rel="noopener noreferrer">Read official White House statements ↗</a><div class="news-meta">Primary source · Not a market-news feed</div></div></article>
+        <article class="news-item"><div class="news-source">Politics</div><div><h3>AP News · Politics</h3><p>Independent reporting and context on US political developments that may affect policy expectations, trade, regulation or market sentiment.</p><a href="https://apnews.com/politics" target="_blank" rel="noopener noreferrer">Read AP politics coverage ↗</a><div class="news-meta">Publisher page · Open for latest stories</div></div></article>
+        <article class="news-item"><div class="news-source">Rates / Fed</div><div><h3>Federal Reserve · Press releases</h3><p>Official monetary-policy releases, FOMC statements, rate decisions and other central-bank announcements. Scheduled Fed events can change volatility and option pricing rapidly.</p><a href="https://www.federalreserve.gov/newsevents/pressreleases.htm" target="_blank" rel="noopener noreferrer">Read Federal Reserve releases ↗</a><div class="news-meta">Primary source · Event times should be checked</div></div></article>
+        <article class="news-item"><div class="news-source">Economic data</div><div><h3>Bureau of Labor Statistics · Release calendar</h3><p>Check scheduled CPI, employment and other major economic releases before the session. Avoid treating a scheduled event as a directional forecast; wait for the actual data and price response.</p><a href="https://www.bls.gov/schedule/" target="_blank" rel="noopener noreferrer">View the BLS release schedule ↗</a><div class="news-meta">Official calendar · Check release time and date</div></div></article>
+        <article class="news-item"><div class="news-source">Options</div><div><h3>Cboe · Exchange and options resources</h3><p>Exchange resources for SPX options, market statistics, product specifications and data access. Confirm contract settlement details and market hours from official product documentation.</p><a href="https://www.cboe.com/" target="_blank" rel="noopener noreferrer">Explore Cboe resources ↗</a><div class="news-meta">Primary exchange source</div></div></article>
+        <article class="news-item"><div class="news-source">Calendar</div><div><h3>NYSE · Holidays and trading hours</h3><p>Verify regular-session hours, market holidays and announced early closes. This dashboard’s countdown uses a built-in holiday list and should not replace official exchange notices.</p><a href="https://www.nyse.com/markets/hours-calendars" target="_blank" rel="noopener noreferrer">Verify NYSE hours and holidays ↗</a><div class="news-meta">Official calendar · Confirm special sessions</div></div></article>
+      </div>
+    </section>
+
+    <section class="panel news-panel">
+      <div class="panel-title"><div><div class="eyebrow">Session journal</div><h2>Review history</h2></div><button class="btn" id="export-csv">Export journal CSV</button></div>
+      <div id="journal-empty" class="muted small">No reviews logged yet. Use “Log 5-minute review” to record the market state and discipline status.</div>
+      <div id="journal-list" class="news-list"></div>
+    </section>
+    <footer class="footer"><span>SPX Discipline Desk · Educational prototype, not investment advice.</span><span>There is always another session. Preserve capital and attention.</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
