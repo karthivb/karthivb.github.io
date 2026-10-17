@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SPX Discipline Desk</title><link rel="stylesheet" href="styles2.css"></head>
+<body>
+<header class="card hd"><div><h1>SPX Discipline Desk</h1><small>Research &amp; discipline aid. Not a trading bot. No brokerage connection.</small></div>
+<div class="clk"><b id="pt">--</b><span id="ptd"></span><span id="ny"></span></div>
+<div><span class="pill" id="sess">--</span><span class="pill" id="dstat">No data</span></div></header>
+<main>
+<section class="card big"><h2 id="cdLabel">Countdown</h2><div id="cd" class="cd">--:--:--</div><small>hours : minutes : seconds</small><p id="cdNote"></p><p id="late" class="warn" hidden>Last 30 minutes: expiration risk and shifting liquidity make late-session options especially hazardous. Countdown does not guarantee any contract is tradable or shares identical expiration/settlement rules.</p>
+<p id="cal"></p></section>
+<section class="card"><h2>SPX summary</h2><div id="sum">No data yet. Connect a feed (see README2.md) or enter prices manually.</div>
+<form id="mf"><input id="mp" type="number" step="0.01" placeholder="Manual SPX price" required><button>Add (labelled MANUAL)</button><button type="button" id="mclr">Clear today</button></form><small id="src"></small></section>
+<section class="card"><h2>Opening range (9:30-9:45 ET)</h2><div id="or">--</div></section>
+<section class="card"><h2>Five-minute review</h2><div id="rev">Waiting for completed 5-min candles.</div></section>
+<section class="card"><h2>News &amp; announcements</h2><div id="news"></div></section>
+<section class="card"><h2>0DTE rules</h2><ul><li>No FOMO entries; wait for a completed candle.</li><li>No revenge trades after a loss.</li><li>Never average down.</li><li>Never hold expiring options hoping for recovery.</li><li>Stop at daily target or loss limit.</li><li>Size small; capital preservation first.</li></ul></section>
+<section class="card"><h2>Daily P/L</h2><div class="row"><label>Target $<input id="tg" type="number"></label><label>Loss limit $<input id="ll" type="number"></label><label>Current P/L $<input id="pl" type="number"></label></div><div id="plS"></div></section>
+<section class="card"><h2>Discipline coach (every 10 min)</h2><div id="coach"></div><small id="next"></small></section>
+<section class="card"><h2>Journal</h2><textarea id="jt" rows="3" placeholder="What did I do, why, and what did I feel?"></textarea><button id="jb">Save entry</button><div id="jl"></div></section>
+<section class="card"><h2>Sources &amp; disclaimer</h2><small>Holiday/early-close dates are computed from NYSE rules and are NOT authoritative; confirm at <a href="https://www.nyse.com/markets/hours-calendars" target="_blank" rel="noopener">nyse.com</a>. Prices come only from your configured feed or your manual entries. Educational use only; not financial advice. Options can lose their entire value.</small></section>
+</main><div id="toast" role="alert" hidden></div>
+<script src="config.example2.js"></script><script src="app2.js"></script></body></html>
