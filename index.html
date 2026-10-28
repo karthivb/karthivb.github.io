@@ -1,146 +1,1234 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f6fa">
-  <meta name="description" content="SPX market context and trading-discipline dashboard with market hours, news, and 0DTE rules.">
-  <title>SPX Discipline Desk</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description"
+    content="SPX Command Center - 0DTE Trading Intelligence, Daily P&L Journal, and Discipline Guardrails.">
+  <title>SPX Command Center · Trading Intelligence Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    /* Canva Studio & Heatmap Black Text Overrides */
+    body {
+      font-size: 16px !important;
+    }
+
+    .timer-big {
+      font-size: 2.8rem !important;
+      font-weight: 800 !important;
+      font-family: 'JetBrains Mono', monospace !important;
+    }
+
+    .stock-tile {
+      color: #000000 !important;
+      padding: 10px 8px !important;
+      border-radius: 8px !important;
+    }
+
+    .stock-tile .tile-sym {
+      color: #000000 !important;
+      font-size: 1.15rem !important;
+      font-weight: 900 !important;
+      display: block;
+    }
+
+    .stock-tile .tile-chg {
+      color: #000000 !important;
+      font-size: 1.05rem !important;
+      font-weight: 800 !important;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .stock-tile .tile-price {
+      color: #0F172A !important;
+      font-size: 0.9rem !important;
+      font-weight: 700 !important;
+      display: block;
+    }
+
+    [data-theme="light"] .tile-perf-strong-green {
+      background-color: #86EFAC !important;
+      border: 1.5px solid #22C55E !important;
+    }
+
+    [data-theme="light"] .tile-perf-green {
+      background-color: #BBF7D0 !important;
+      border: 1.5px solid #4ADE80 !important;
+    }
+
+    [data-theme="light"] .tile-perf-light-green {
+      background-color: #DCFCE7 !important;
+      border: 1.5px solid #86EFAC !important;
+    }
+
+    [data-theme="light"] .tile-perf-flat {
+      background-color: #E2E8F0 !important;
+      border: 1.5px solid #CBD5E1 !important;
+    }
+
+    [data-theme="light"] .tile-perf-light-red {
+      background-color: #FEE2E2 !important;
+      border: 1.5px solid #FCA5A5 !important;
+    }
+
+    [data-theme="light"] .tile-perf-red {
+      background-color: #FECACA !important;
+      border: 1.5px solid #F87171 !important;
+    }
+
+    [data-theme="light"] .tile-perf-strong-red {
+      background-color: #FCA5A5 !important;
+      border: 1.5px solid #EF4444 !important;
+    }
+  </style>
 </head>
+
 <body>
-  <main class="shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark">SPX</div>
-        <div><div class="brand-name">Discipline Desk</div><div class="eyebrow">Market context · Process over impulse</div></div>
-      </div>
-      <div class="clock"><span>Pacific clock · PST/PDT aware</span><strong id="clock">--:--:--</strong><span id="date">Loading date…</span></div>
-    </header>
-
-    <section class="hero">
-      <div class="hero-head">
-        <div>
-          <div class="eyebrow">Daily market brief</div>
-          <h1>Read the market.<br>Protect your next day.</h1>
-          <p class="subtitle">SPX session timing, major headlines, and guardrails to stop one emotional trade from becoming a terrible day.</p>
-        </div>
-        <div class="pill"><span class="dot"></span><span id="session-label">Checking market session…</span></div>
-      </div>
-
-      <div class="countdown-grid">
-        <article class="countdown-card featured">
-          <div class="countdown-label">Market status · New York time</div>
-          <div class="countdown-value" id="market-status">CHECKING…</div>
-          <div class="countdown-sub" id="market-status-detail">Calculating regular-session hours</div>
-        </article>
-        <article class="countdown-card">
-          <div class="countdown-label" id="countdown-title">Time until market close</div>
-          <div class="countdown-value timer" id="close-countdown">--:--:--</div>
-          <div class="countdown-sub" id="close-detail">NYSE / Cboe regular session</div>
-        </article>
-        <article class="countdown-card">
-          <div class="countdown-label">Next regular open</div>
-          <div class="countdown-value timer" id="open-countdown">--:--:--</div>
-          <div class="countdown-sub" id="open-detail">Countdown in Pacific time</div>
-        </article>
-      </div>
-      <div class="notice"><strong>Data honesty:</strong> Countdown uses the standard US equity session (9:30 AM–4:00 PM New York time), weekends, and a built-in US market-holiday calendar. It is a helpful calendar estimate, not an exchange-status feed. Verify early closes and unusual closures with the exchange.</div>
-      <div class="ticker" aria-label="Market and discipline ticker">
-        <div class="ticker-track">
-          <span><b>SPX</b> Confirm the opening range before forming a bias</span><span>•</span>
-          <span><b>0DTE</b> Time decay never takes lunch</span><span>•</span>
-          <span><b>RISK</b> No averaging down</span><span>•</span>
-          <span><b>RULE</b> Target reached means session locked</span><span>•</span>
-          <span><b>NEWS</b> Verify claims with primary sources</span><span>•</span>
-          <span><b>SPX</b> Confirm the opening range before forming a bias</span><span>•</span>
-          <span><b>0DTE</b> Time decay never takes lunch</span><span>•</span>
-          <span><b>RISK</b> No averaging down</span><span>•</span>
-          <span><b>RULE</b> Target reached means session locked</span>
-        </div>
-      </div>
-    </section>
-
-    <div class="layout">
-      <aside class="sidebar panel">
-        <div class="panel-title"><div><div class="eyebrow">0DTE rules</div><h2>Keep these visible</h2></div><span class="pill">Risk first</span></div>
-        <div class="rule-note"><b>1. One or two trades, max</b><p>Do not keep clicking to force a green day. Stop when your planned trade limit is reached.</p></div>
-        <div class="rule-note"><b>2. Never average down</b><p>No adding to a losing contract. Define the exit before entry. A cheap option can still go to zero.</p></div>
-        <div class="rule-note"><b>3. No FOMO or revenge</b><p>If you missed the move, let it go. After a loss, do not trade to win the money back.</p></div>
-        <div class="rule-note"><b>4. Sideways = stand aside</b><p>Repeated VWAP crosses and overlapping candles can burn premium while price goes nowhere.</p></div>
-        <div class="rule-note"><b>5. Respect the clock</b><p>0DTE options lose time value quickly near expiration. Avoid holding and hoping. Know the product's settlement and expiration details.</p></div>
-        <div class="rule-note"><b>6. Daily target reached?</b><p>Manage/close positions according to your plan, verify you are flat, lock the session, and leave the screen.</p></div>
-        <div class="sidebar-callout">You have another trading day. Protect your capital and your attention.</div>
-        <p class="muted tiny">Educational guardrails only. They do not guarantee profit or cap losses at the displayed amount.</p>
-      </aside>
-
-      <div class="main-column">
-        <section class="panel">
-          <div class="panel-title"><div><div class="eyebrow">Index overview</div><h2>SPX session map</h2></div><span class="state wait" id="trend-state">UNCERTAIN</span></div>
-          <div class="market-grid">
-            <div class="metric"><div class="metric-label">SPX reference</div><div class="metric-value" id="spx-price">—</div><div class="metric-foot">Manual entry · no live feed</div></div>
-            <div class="metric"><div class="metric-label">Opening range high</div><div class="metric-value" id="or-high-display">—</div><div class="metric-foot">First 15-minute high</div></div>
-            <div class="metric"><div class="metric-label">Opening range low</div><div class="metric-value" id="or-low-display">—</div><div class="metric-foot">First 15-minute low</div></div>
-          </div>
-          <div class="inputs">
-            <div class="field"><label for="price">Current SPX value (manual)</label><input id="price" type="number" step="0.01" placeholder="e.g. 6800.25"></div>
-            <div class="field"><label for="vwap">VWAP (manual)</label><input id="vwap" type="number" step="0.01" placeholder="e.g. 6798.50"></div>
-            <div class="field"><label for="or-high">Opening-range high</label><input id="or-high" type="number" step="0.01" placeholder="First 15m high"></div>
-            <div class="field"><label for="or-low">Opening-range low</label><input id="or-low" type="number" step="0.01" placeholder="First 15m low"></div>
-          </div>
-          <div class="controls"><button class="btn primary" id="classify">Review market state</button><button class="btn" id="save-review">Log 5-minute review</button><button class="btn" id="reset-market">Reset market inputs</button></div>
-          <div class="range-note" id="market-explanation">Enter price, VWAP and opening-range levels. The prototype uses simple context checks, not live prices or trade-entry signals.</div>
-          <div class="status-line" id="review-count">Reviews logged: 0 · Last review: not yet</div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-title"><div><div class="eyebrow">Your guardrails</div><h2>Discipline check</h2></div><span class="pill">No revenge trades</span></div>
-          <div class="inputs">
-            <div class="field"><label for="profit-goal">Daily profit stop ($)</label><input id="profit-goal" type="number" value="1000" min="1"></div>
-            <div class="field"><label for="loss-limit">Daily loss stop ($)</label><input id="loss-limit" type="number" value="300" min="1"></div>
-            <div class="field"><label for="pnl">Realized daily P&amp;L ($)</label><input id="pnl" type="number" value="0" step="0.01"></div>
-            <div class="field"><label for="trades">Trades taken</label><select id="trades"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4+</option></select></div>
-          </div>
-          <div class="rules">
-            <div class="rule"><input type="checkbox" id="sideways"><label for="sideways">Sideways or conflicting signals<span>Stand aside. No forced setup.</span></label></div>
-            <div class="rule"><input type="checkbox" id="fomo"><label for="fomo">FOMO / chasing a candle<span>Wait for a fresh, confirmed setup.</span></label></div>
-            <div class="rule"><input type="checkbox" id="revenge"><label for="revenge">Trying to win back a loss<span>Close the platform and reset.</span></label></div>
-            <div class="rule"><input type="checkbox" id="average"><label for="average">Thinking about averaging down<span>Do not add to a losing position.</span></label></div>
-            <div class="rule"><input type="checkbox" id="lunch"><label for="lunch">Midday, no clean momentum<span>Protect capital from low-quality entries and time decay.</span></label></div>
-          </div>
-          <div class="coach" id="coach"><strong>WAIT FOR CONFIRMATION</strong><p>Follow the plan. A market opinion is not a trade signal.</p></div>
-          <div class="lock-overlay" id="lock-message" role="status"></div>
-          <div class="controls"><button class="btn primary" id="check-discipline">Run discipline check</button><button class="btn danger" id="unlock-session">Reset daily lock (intentional)</button></div>
-          <div class="status-line" id="next-prompt">10-minute discipline check runs while this page is open.</div>
-        </section>
+  <!-- MODALS -->
+  <div id="discipline-modal" class="modal-overlay" style="display:none">
+    <div class="modal-box glass">
+      <div class="modal-icon">⚠️</div>
+      <h2 class="modal-title">15-Minute Check-In</h2>
+      <p class="modal-text">Are you waiting for a <strong>valid setup</strong>, or trading out of FOMO or revenge?</p>
+      <div class="modal-quote" id="modal-quote"></div>
+      <div class="modal-actions">
+        <button class="btn btn-good" onclick="disciplineChoice('confirm')">✓ Waiting for confirmation</button>
+        <button class="btn btn-warn" onclick="disciplineChoice('fomo')">⚡ Feeling FOMO</button>
+        <button class="btn btn-danger" onclick="disciplineChoice('revenge')">🔄 Trying to recover a loss</button>
+        <button class="btn btn-pause" onclick="disciplineChoice('break')">☕ Take a break</button>
       </div>
     </div>
-
-    <section class="panel news-panel">
-      <div class="panel-title">
-        <div><div class="eyebrow">Headlines & source links</div><h2>SPX · Trump / Washington · Major news</h2><div class="muted small">Readable summaries and links to full publisher coverage. “Age” is shown only when a real publication timestamp is available.</div></div>
-        <div class="news-tools"><input id="news-filter" type="search" placeholder="Filter headlines…"><button class="btn" id="refresh-news">Reload source links</button></div>
+  </div>
+  <div id="loss-modal" class="modal-overlay" style="display:none">
+    <div class="modal-box glass loss-modal-box">
+      <div class="modal-icon">🛑</div>
+      <h2 class="modal-title">STOP. You Are In a Loss.</h2>
+      <p class="modal-text">Cut it. Focus on <strong>tomorrow</strong>. Do NOT wait 15 minutes holding all your capital.
+        Do NOT revenge trade.</p>
+      <div class="loss-rules">
+        <div class="loss-rule">📌 Your family matters more than this trade</div>
+        <div class="loss-rule">📌 You have another trading day tomorrow</div>
+        <div class="loss-rule">📌 Do not count stones while losing diamonds</div>
+        <div class="loss-rule">📌 Small profit beats blown account every time</div>
       </div>
-      <div class="news-notice"><b>Live-feed status:</b> This ZIP works without API keys and does not invent breaking headlines or “minutes ago” timestamps. These are stable source links with editorial descriptions. A real feed needs an authorized news API or a backend RSS proxy; browser-only RSS calls are often blocked by CORS.</div>
-      <div class="news-list" id="news-list">
-        <article class="news-item"><div class="news-source">US markets</div><div><h3>Reuters · Markets</h3><p>Follow US equities, S&amp;P 500 moves, Treasury yields, Federal Reserve expectations, earnings, commodities and geopolitical developments. Use the article timestamp and original reporting to assess what is genuinely new.</p><a href="https://www.reuters.com/markets/" target="_blank" rel="noopener noreferrer">Read Reuters Markets coverage ↗</a><div class="news-meta">Publisher page · Live publication times shown on source</div></div></article>
-        <article class="news-item"><div class="news-source">Stocks</div><div><h3>CNBC · Markets</h3><p>Market wrap-ups, intraday index context, company news and economic data. Check whether a headline is already reflected in price and whether the index confirms the move.</p><a href="https://www.cnbc.com/markets/" target="_blank" rel="noopener noreferrer">Read CNBC Markets coverage ↗</a><div class="news-meta">Publisher page · Open for latest stories</div></div></article>
-        <article class="news-item"><div class="news-source">Trump / policy</div><div><h3>The White House · Briefings and statements</h3><p>Primary-source statements on executive actions, trade policy, tariffs, international affairs and administration announcements. For a policy headline, compare the original statement with market-news interpretation before reacting.</p><a href="https://www.whitehouse.gov/briefings-statements/" target="_blank" rel="noopener noreferrer">Read official White House statements ↗</a><div class="news-meta">Primary source · Not a market-news feed</div></div></article>
-        <article class="news-item"><div class="news-source">Politics</div><div><h3>AP News · Politics</h3><p>Independent reporting and context on US political developments that may affect policy expectations, trade, regulation or market sentiment.</p><a href="https://apnews.com/politics" target="_blank" rel="noopener noreferrer">Read AP politics coverage ↗</a><div class="news-meta">Publisher page · Open for latest stories</div></div></article>
-        <article class="news-item"><div class="news-source">Rates / Fed</div><div><h3>Federal Reserve · Press releases</h3><p>Official monetary-policy releases, FOMC statements, rate decisions and other central-bank announcements. Scheduled Fed events can change volatility and option pricing rapidly.</p><a href="https://www.federalreserve.gov/newsevents/pressreleases.htm" target="_blank" rel="noopener noreferrer">Read Federal Reserve releases ↗</a><div class="news-meta">Primary source · Event times should be checked</div></div></article>
-        <article class="news-item"><div class="news-source">Economic data</div><div><h3>Bureau of Labor Statistics · Release calendar</h3><p>Check scheduled CPI, employment and other major economic releases before the session. Avoid treating a scheduled event as a directional forecast; wait for the actual data and price response.</p><a href="https://www.bls.gov/schedule/" target="_blank" rel="noopener noreferrer">View the BLS release schedule ↗</a><div class="news-meta">Official calendar · Check release time and date</div></div></article>
-        <article class="news-item"><div class="news-source">Options</div><div><h3>Cboe · Exchange and options resources</h3><p>Exchange resources for SPX options, market statistics, product specifications and data access. Confirm contract settlement details and market hours from official product documentation.</p><a href="https://www.cboe.com/" target="_blank" rel="noopener noreferrer">Explore Cboe resources ↗</a><div class="news-meta">Primary exchange source</div></div></article>
-        <article class="news-item"><div class="news-source">Calendar</div><div><h3>NYSE · Holidays and trading hours</h3><p>Verify regular-session hours, market holidays and announced early closes. This dashboard’s countdown uses a built-in holiday list and should not replace official exchange notices.</p><a href="https://www.nyse.com/markets/hours-calendars" target="_blank" rel="noopener noreferrer">Verify NYSE hours and holidays ↗</a><div class="news-meta">Official calendar · Confirm special sessions</div></div></article>
+      <button class="btn btn-good" onclick="closeLossModal()">I Understand — Stepping Away</button>
+    </div>
+  </div>
+  <div id="profit-modal" class="modal-overlay" style="display:none">
+    <div class="modal-box glass profit-modal-box">
+      <div class="modal-icon">🎯</div>
+      <h2 class="modal-title">Profit Target Reached!</h2>
+      <p class="modal-text">You have hit your daily profit goal. <strong>Consider stopping now.</strong></p>
+      <div class="loss-rules">
+        <div class="loss-rule">💎 Lock in your win — you earned it</div>
+        <div class="loss-rule">💎 Sideway traps kill winners every day</div>
+        <div class="loss-rule">💎 Protect capital for tomorrow's opportunity</div>
       </div>
-    </section>
+      <button class="btn btn-good" onclick="closeProfitModal()">Locking Session — Done for Today</button>
+      <button class="btn btn-warn" onclick="closeProfitModal()">Continue with Caution</button>
+    </div>
+  </div>
+  <div id="stock-modal" class="modal-overlay" style="display:none">
+    <div class="modal-box glass stock-modal-box">
+      <div class="stock-modal-head">
+        <div>
+          <h2 id="sm-ticker" style="font-size:1.4rem;font-weight:800;letter-spacing:0.04em;">—</h2>
+          <div id="sm-name" style="color:var(--text-dim);font-size:0.75rem;">—</div>
+        </div>
+        <div style="text-align:right;">
+          <div id="sm-price" style="font-size:1.3rem;font-weight:700;font-family:'JetBrains Mono',monospace;">—</div>
+          <div id="sm-chg" style="font-weight:600;font-size:0.85rem;">—</div>
+        </div>
+        <button class="btn btn-sm btn-outline" onclick="closeStockModal()" style="margin-left:1rem;">✕</button>
+      </div>
+      <div class="stock-modal-canvas-wrap"><canvas id="modalCanvas"></canvas></div>
+      <div class="stock-modal-details">
+        <div class="smd-item">
+          <div class="smd-label">Market Cap</div>
+          <div class="smd-value" id="sm-mcap">—</div>
+        </div>
+        <div class="smd-item">
+          <div class="smd-label">Volume</div>
+          <div class="smd-value" id="sm-vol">—</div>
+        </div>
+        <div class="smd-item">
+          <div class="smd-label">13D Avg Vol</div>
+          <div class="smd-value" id="sm-13d">—</div>
+        </div>
+        <div class="smd-item">
+          <div class="smd-label">Rel Vol</div>
+          <div class="smd-value" id="sm-relvol">—</div>
+        </div>
+        <div class="smd-item">
+          <div class="smd-label">RSI (14)</div>
+          <div class="smd-value" id="sm-rsi">—</div>
+        </div>
+        <div class="smd-item">
+          <div class="smd-label">Trend Status</div>
+          <div class="smd-value" id="sm-trend">—</div>
+        </div>
+      </div>
+      <div
+        style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--glass-border);padding-top:1rem;">
+        <button class="btn btn-primary" id="sm-watchlist-btn" onclick="toggleModalWatchlist()">+ Add to
+          Watchlist</button>
+        <button class="btn btn-outline" onclick="openStockInCharts()">Open in Charts Workspace →</button>
+      </div>
+    </div>
+  </div>
 
-    <section class="panel news-panel">
-      <div class="panel-title"><div><div class="eyebrow">Session journal</div><h2>Review history</h2></div><button class="btn" id="export-csv">Export journal CSV</button></div>
-      <div id="journal-empty" class="muted small">No reviews logged yet. Use “Log 5-minute review” to record the market state and discipline status.</div>
-      <div id="journal-list" class="news-list"></div>
-    </section>
-    <footer class="footer"><span>SPX Discipline Desk · Educational prototype, not investment advice.</span><span>There is always another session. Preserve capital and attention.</span></footer>
-  </main>
-  <script src="app.js"></script>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <nav class="sidebar glass" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">SPX</div>
+        <div class="brand-text">
+          <div class="brand-name">Command Center</div>
+          <div class="brand-sub">0DTE · Discipline · Intelligence</div>
+        </div>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">COMMAND &amp; MARKETS</div>
+        <button class="nav-btn active" data-tab="home" onclick="switchTab('home')"><span
+            class="nav-icon">⊕</span><span>Home · Command</span></button>
+        <button class="nav-btn" data-tab="heatmap" onclick="switchTab('heatmap')"><span
+            class="nav-icon">🗺️</span><span>Market Heatmap</span></button>
+        <button class="nav-btn" data-tab="screener" onclick="switchTab('screener')"><span
+            class="nav-icon">⚡</span><span>Micro-Cap Screener</span></button>
+        <button class="nav-btn" data-tab="megacap" onclick="switchTab('megacap')"><span
+            class="nav-icon">🔥</span><span>Mega-Cap &amp; AI</span></button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">TRADING &amp; CHARTS</div>
+        <button class="nav-btn" data-tab="charts" onclick="switchTab('charts')"><span
+            class="nav-icon">📈</span><span>Charts &amp; Technicals</span></button>
+        <button class="nav-btn" data-tab="watchlist" onclick="switchTab('watchlist')"><span
+            class="nav-icon">⭐</span><span>Watchlist</span></button>
+        <button class="nav-btn" data-tab="tools" onclick="switchTab('tools')"><span class="nav-icon">🎯</span><span>0DTE
+            Tools</span></button>
+        <button class="nav-btn" data-tab="discipline" onclick="switchTab('discipline')"><span
+            class="nav-icon">🛡️</span><span>Discipline Guard</span></button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">JOURNAL &amp; SCHEDULE</div>
+        <button class="nav-btn" data-tab="journal" onclick="switchTab('journal')"><span
+            class="nav-icon">📓</span><span>Trading Journal</span></button>
+        <button class="nav-btn" data-tab="calendar" onclick="switchTab('calendar')"><span
+            class="nav-icon">📅</span><span>Trade Calendar</span></button>
+        <button class="nav-btn" data-tab="news" onclick="switchTab('news')"><span class="nav-icon">📡</span><span>Market
+            News</span><span class="nav-badge">LIVE</span></button>
+        <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')"><span
+            class="nav-icon">⚙️</span><span>Settings &amp; Feeds</span></button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">SESSION P&amp;L</div>
+        <div class="sidebar-pnl">
+          <div class="spnl-label">Today P&L</div>
+          <div class="spnl-value" id="spnl-display">$0.00</div>
+          <div class="spnl-trades" id="spnl-trades">0 days logged</div>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <button class="btn btn-sm btn-outline" onclick="toggleTheme()" id="theme-btn">☀ Light Mode</button>
+        <div class="sidebar-quote" id="sidebar-quote">Protect capital. You have another day.</div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <!-- HOME TAB -->
+      <div id="tab-home" class="tab-content active">
+        <section class="indices-ticker-bar">
+          <div class="index-chip glass" onclick="openStockModal('SPX')">
+            <div>
+              <div class="index-chip-sym">SPX</div>
+              <div class="index-chip-sub">S&amp;P 500 Index</div>
+            </div>
+            <div class="index-chip-right">
+              <div class="index-chip-price" id="idx-spx-price">5,892.40</div>
+              <div class="index-chip-chg" id="idx-spx-chg">+0.48%</div>
+            </div>
+          </div>
+          <div class="index-chip glass" onclick="openStockModal('SPY')">
+            <div>
+              <div class="index-chip-sym">SPY</div>
+              <div class="index-chip-sub">SPDR S&amp;P 500 ETF</div>
+            </div>
+            <div class="index-chip-right">
+              <div class="index-chip-price" id="idx-spy-price">588.15</div>
+              <div class="index-chip-chg" id="idx-spy-chg">+0.49%</div>
+            </div>
+          </div>
+          <div class="index-chip glass" onclick="openStockModal('QQQ')">
+            <div>
+              <div class="index-chip-sym">QQQ</div>
+              <div class="index-chip-sub">Invesco Nasdaq 100</div>
+            </div>
+            <div class="index-chip-right">
+              <div class="index-chip-price" id="idx-qqq-price">504.60</div>
+              <div class="index-chip-chg" id="idx-qqq-chg">+0.72%</div>
+            </div>
+          </div>
+          <div class="index-chip glass" onclick="openStockModal('DIA')">
+            <div>
+              <div class="index-chip-sym">DIA</div>
+              <div class="index-chip-sub">Dow Jones ETF</div>
+            </div>
+            <div class="index-chip-right">
+              <div class="index-chip-price" id="idx-dia-price">432.80</div>
+              <div class="index-chip-chg" id="idx-dia-chg">+0.15%</div>
+            </div>
+          </div>
+          <div class="index-chip glass" onclick="openStockModal('VIX')">
+            <div>
+              <div class="index-chip-sym">VIX</div>
+              <div class="index-chip-sub">Cboe Volatility</div>
+            </div>
+            <div class="index-chip-right">
+              <div class="index-chip-price" id="idx-vix-price">14.85</div>
+              <div class="index-chip-chg" id="idx-vix-chg">-3.20%</div>
+            </div>
+          </div>
+          <div class="vix-regime-chip regime-normal" id="vix-regime-badge">
+            <span>Market Regime</span><strong id="vix-regime-text">NORMAL CHOP · CAUTION</strong>
+          </div>
+        </section>
+
+        <div class="phase-bar" id="phase-bar">
+          <div class="phase-label" id="phase-label">CHECKING SESSION…</div>
+          <span id="phase-time-badge" class="phase-badge"></span>
+        </div>
+
+        <section class="timers-hero">
+          <div class="timer-card featured glass" id="zone-card">
+            <div class="timer-card-label"><span class="zone-dot" id="zone-dot"></span><span id="zone-label">PST Market
+                Clock</span></div>
+            <div class="timer-big" id="pst-clock">--:--:--</div>
+            <div class="timer-sub" id="zone-status">Loading…</div>
+          </div>
+          <div class="timer-card glass">
+            <div class="timer-card-label">⏰ Time Since Open</div>
+            <div class="timer-big green-text" id="time-since-open">--:--:--</div>
+            <div class="timer-sub">Open at 6:30 AM PST</div>
+          </div>
+          <div class="timer-card glass">
+            <div class="timer-card-label">🔔 Time Until Close</div>
+            <div class="timer-big red-text" id="time-until-close">--:--:--</div>
+            <div class="timer-sub">Close at 1:00 PM PST</div>
+          </div>
+          <div class="timer-card glass">
+            <div class="timer-card-label">🗽 NY Time</div>
+            <div class="timer-big" id="ny-clock">--:--:--</div>
+            <div class="timer-sub" id="market-status-text">Checking…</div>
+          </div>
+        </section>
+
+        <section class="alert-grid-section glass">
+          <div class="section-head">
+            <h2>⚡ 0DTE Alert Windows · 6:30 – 8:30 AM PST (Every 15 Min)</h2>
+            <div class="section-sub">Sound alerts active · No revenge trades · Stay disciplined</div>
+          </div>
+          <div class="alert-grid" id="alert-grid"></div>
+        </section>
+
+        <section class="quote-widget glass">
+          <div class="quote-icon">💬</div>
+          <div class="quote-text" id="rotating-quote">Loading daily reminder…</div>
+          <div class="quote-controls">
+            <button class="btn btn-sm btn-outline" onclick="nextQuote()">Next Quote</button>
+            <button class="btn btn-sm btn-outline" id="sound-toggle" onclick="toggleSound()">🔔 Sound ON</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- JOURNAL TAB (PER-DAY ENTRY & BIG DAYS REMAINING) -->
+      <div id="tab-journal" class="tab-content">
+        <!-- TOP BIG TEXT: REMAINING TRADING DAYS COUNTER -->
+        <div class="glass"
+          style="margin-bottom: 1.5rem; padding: 1.5rem 2rem; border: 2px solid var(--glass-border); border-radius: 12px; background: rgba(15, 23, 42, 0.85);">
+          <div
+            style="font-size: 13px; font-weight: 800; color: #38BDF8; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;">
+            ⏳ Market Horizon Telemetry</div>
+          <div style="display: flex; gap: 3.5rem; flex-wrap: wrap; align-items: baseline;">
+            <div>
+              <div style="font-size: 13.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                Total Trading Days in Rest of Current Month</div>
+              <div
+                style="font-size: 3rem; font-weight: 900; color: #10B981; font-family: 'JetBrains Mono', monospace; line-height: 1.1;"
+                id="big-month-remaining">-- DAYS</div>
+              <div style="font-size: 13.5px; color: var(--text-muted);" id="big-month-name">October Sessions Remaining
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 13.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                Total Trading Days in Rest of <span class="lbl-year">2026</span></div>
+              <div
+                style="font-size: 3rem; font-weight: 900; color: #38BDF8; font-family: 'JetBrains Mono', monospace; line-height: 1.1;"
+                id="big-year-remaining">-- DAYS</div>
+              <div style="font-size: 13.5px; color: var(--text-muted);">Plenty of trading sessions left. Never rush or
+                force trades.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIRECT PER-DAY INPUT BAR (NO TRADE DETAILS) -->
+        <div class="glass"
+          style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; border: 1.5px solid var(--glass-border); border-radius: 10px;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text);">⚡ Record Daily Value</h2>
+              <div style="font-size: 13.5px; color: var(--text-muted);">Set Day Target and enter Achieved P&amp;L
+                (updates Calendar, Weekly Total, and Google Sheets).</div>
+            </div>
+            <div id="day-log-status" style="font-size: 14px; font-weight: 800;"></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 160px 160px 180px 1fr 180px; gap: 14px; align-items: end;">
+            <div class="field">
+              <label
+                style="font-size: 13px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">📅
+                Date</label>
+              <input type="date" id="pnl-date" onchange="loadDateForEdit(this.value)"
+                style="width: 100%; padding: 10px 12px; background: var(--bg2); border: 1px solid var(--glass-border); color: var(--text); border-radius: 6px; font-size: 15px; font-weight: 600;">
+            </div>
+            <div class="field">
+              <label style="font-size: 13px; font-weight: 700; color: #10B981; display: block; margin-bottom: 4px;">🎯
+                Day Target ($)</label>
+              <input type="number" id="pnl-target" value="500" step="50"
+                style="width: 100%; padding: 10px 12px; background: rgba(16,185,129,0.08); border: 1.5px solid #10B981; color: #10B981; border-radius: 6px; font-size: 16px; font-weight: 800;">
+            </div>
+            <div class="field">
+              <label style="font-size: 13px; font-weight: 800; color: #38BDF8; display: block; margin-bottom: 4px;">💰
+                Achieved P&amp;L ($)</label>
+              <input type="number" id="pnl-amount" step="0.01" placeholder="e.g. 500 or -250"
+                style="width: 100%; padding: 10px 12px; background: var(--bg2); border: 2px solid #38BDF8; color: var(--text); border-radius: 6px; font-size: 17px; font-weight: 800; font-family: 'JetBrains Mono', monospace;">
+            </div>
+            <div class="field">
+              <label
+                style="font-size: 13px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Daily
+                Rule / Note</label>
+              <input type="text" id="pnl-notes" placeholder="e.g. Target reached, shut terminal, spent time with family"
+                style="width: 100%; padding: 10px 12px; background: var(--bg2); border: 1px solid var(--glass-border); color: var(--text); border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+              <button class="btn btn-primary" onclick="saveDayPnlWithTarget()"
+                style="width: 100%; height: 46px; font-size: 15px; font-weight: 800; border-radius: 8px; background: #10B981; border: none; cursor: pointer; color: #fff;">✓
+                Save Day Entry</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CALENDAR + PER-DAY TABLE -->
+        <div class="journal-layout">
+          <div class="journal-calendar-col">
+            <div class="cal-widget glass">
+              <div class="cal-header">
+                <button class="cal-nav" onclick="calNav(-1)">‹</button>
+                <div class="cal-month-label" id="cal-month-label">Month Year</div>
+                <button class="cal-nav" onclick="calNav(1)">›</button>
+              </div>
+              <div class="cal-grid" id="cal-grid"></div>
+              <div class="cal-legend" style="margin-top: 10px;">
+                <span class="leg-profit">● Win</span>
+                <span class="leg-loss">● Loss</span>
+                <span>🎯 Target Hit</span>
+              </div>
+            </div>
+            <div class="weekly-panel glass" style="margin-top: 1rem; padding: 1.25rem;">
+              <div class="section-head" style="margin-bottom: 0.75rem;">
+                <h3 style="font-size: 1.1rem; font-weight: 800;">Weekly Totals</h3>
+              </div>
+              <div id="weekly-totals-list"></div>
+            </div>
+          </div>
+
+          <div class="journal-main-col">
+            <div class="month-stats glass">
+              <div class="mstat">
+                <div class="mstat-label">Month Total P&amp;L</div>
+                <div class="mstat-val" id="month-pnl">$0</div>
+              </div>
+              <div class="mstat">
+                <div class="mstat-label">Win Days</div>
+                <div class="mstat-val green-text" id="month-wins">0</div>
+              </div>
+              <div class="mstat">
+                <div class="mstat-label">Loss Days</div>
+                <div class="mstat-val red-text" id="month-losses">0</div>
+              </div>
+              <div class="mstat">
+                <div class="mstat-label">Consistency Rate</div>
+                <div class="mstat-val" id="month-winrate">0%</div>
+              </div>
+              <div class="mstat">
+                <div class="mstat-label">Best Day</div>
+                <div class="mstat-val green-text" id="month-best">$0</div>
+              </div>
+              <div class="mstat">
+                <div class="mstat-label">Worst Day</div>
+                <div class="mstat-val red-text" id="month-worst">$0</div>
+              </div>
+            </div>
+
+            <div class="journal-table-wrap glass">
+              <div class="table-scroll">
+                <table class="journal-table" id="journal-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Day</th>
+                      <th>Target ($)</th>
+                      <th>Achieved ($)</th>
+                      <th>Status</th>
+                      <th>Week Cumulative</th>
+                      <th>Consistency Rule / Note</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="daily-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALENDAR TAB (CURRENT YEAR 2026, BIG TEXT & 10 PROVERBS) -->
+      <div id="tab-calendar" class="tab-content">
+        <div class="tab-header">
+          <div>
+            <h1 class="tab-title">📅 Trade Calendar · <span id="cal-current-year">2026</span> Annual View</h1>
+            <div style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Dynamic trading days engine ·
+              Official NYSE &amp; Nasdaq market holidays</div>
+          </div>
+        </div>
+
+        <!-- BIG TEXT CARD -->
+        <div class="glass"
+          style="margin-bottom: 1.5rem; padding: 1.5rem 2rem; border: 2px solid var(--glass-border); border-radius: 12px; background: rgba(15, 23, 42, 0.85);">
+          <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: center;">
+            <div>
+              <div
+                style="font-size: 13.5px; font-weight: 800; color: #10B981; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;">
+                ⏳ Total Trading Days in Rest of Current Month
+              </div>
+              <div
+                style="font-size: 3.2rem; font-weight: 900; color: #10B981; font-family: 'JetBrains Mono', monospace; line-height: 1.1;"
+                id="big-month-left">-- DAYS</div>
+              <div style="font-size: 14px; color: var(--text-muted); margin-top: 4px;" id="big-month-sub">October 2026
+                Sessions Remaining</div>
+            </div>
+            <div>
+              <div
+                style="font-size: 13.5px; font-weight: 800; color: #38BDF8; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;">
+                🗓️ Total Trading Days in Rest of <span class="lbl-year">2026</span>
+              </div>
+              <div
+                style="font-size: 3.2rem; font-weight: 900; color: #38BDF8; font-family: 'JetBrains Mono', monospace; line-height: 1.1;"
+                id="big-year-left">-- DAYS</div>
+              <div style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Plenty of opportunities ahead.
+                Protect capital and never force trades.</div>
+            </div>
+          </div>
+          <!-- SMALL TEXT ROW -->
+          <div
+            style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--glass-border); display: flex; gap: 2.5rem; flex-wrap: wrap; font-size: 13px; color: var(--text-muted);">
+            <div>Total Trading Days of Year (<span class="lbl-year">2026</span>): <strong
+                style="color: var(--text); font-family: 'JetBrains Mono';" id="annual-total">—</strong></div>
+            <div>Days Elapsed: <strong style="color: var(--text); font-family: 'JetBrains Mono';"
+                id="annual-elapsed">—</strong></div>
+            <div>Market Holidays (<span class="lbl-year">2026</span>): <strong
+                style="color: var(--text); font-family: 'JetBrains Mono';" id="annual-holidays">9</strong></div>
+          </div>
+        </div>
+
+        <!-- 10 PROVERBIAL RULES FOR DAILY CONSISTENCY & FAMILY FIRST -->
+        <div class="glass"
+          style="margin-bottom: 1.5rem; padding: 1.5rem; border: 1.5px solid var(--glass-border); border-radius: 12px;">
+          <div
+            style="display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem;">
+            <span style="font-size: 1.4rem;">🧭</span>
+            <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text);">10 Daily Proverbial Rules: Consistency
+              &gt; Greed · Care for Family</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px;">
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #10B981;">
+              <strong style="color: #10B981; font-size: 14px;">1. Improve Consistency Over Greed</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">Compounding 1% better every day
+                creates true wealth. Big home-run greed destroys accounts.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #38BDF8;">
+              <strong style="color: #38BDF8; font-size: 14px;">2. Just Focus on Your Job</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">Your job is strict execution and
+                risk control. Profit is merely the automatic byproduct of discipline.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #EF4444;">
+              <strong style="color: #EF4444; font-size: 14px;">3. Care for Your Family First</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">A blown trading account hurts the
+                people you love. Never risk your family's peace of mind for ego.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #F59E0B;">
+              <strong style="color: #F59E0B; font-size: 14px;">4. You Have Another Trading Day Tomorrow</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">The market will be here tomorrow.
+                Keep your capital intact so you can show up for the next session.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #10B981;">
+              <strong style="color: #10B981; font-size: 14px;">5. Do Not Count Stones Losing Diamonds</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">Protect your real capital. Don't
+                fight for tiny pennies while exposing your whole account to ruin.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #38BDF8;">
+              <strong style="color: #38BDF8; font-size: 14px;">6. Small Profit Beats Blown Account Every Time</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">Green is green. Taking $200–$500
+                off the table beats holding into a -80% decay collapse.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #10B981;">
+              <strong style="color: #10B981; font-size: 14px;">7. Target Reached = Shut Down &amp; Be Present</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">Once daily target is hit, lock the
+                session immediately. Go spend quality time with your family.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #F59E0B;">
+              <strong style="color: #F59E0B; font-size: 14px;">8. Sideways Chop = Cash is a Position</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">Sideways markets exist to burn
+                option premium. Sitting in cash preserves 100% of your power.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #EF4444;">
+              <strong style="color: #EF4444; font-size: 14px;">9. The 15-Minute Loss Cut Rule</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">If a 0DTE trade is negative after
+                15 minutes, cut it. Never hold a decaying contract hoping for miracles.</p>
+            </div>
+            <div
+              style="padding: 10px 14px; background: var(--bg2); border-radius: 8px; border-left: 3px solid #38BDF8;">
+              <strong style="color: #38BDF8; font-size: 14px;">10. Trade Like a Robot, Live Like a Human</strong>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 3px;">Execute rules without emotion
+                during market hours. Dedicate your heart and time to your family outside.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="annual-calendar-grid" id="annual-calendar-grid"></div>
+      </div>
+
+      <!-- HEATMAP TAB -->
+      <div id="tab-heatmap" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">🗺️ Market Performance Heatmap</h1>
+          <div class="tab-actions"><button class="btn btn-primary" onclick="renderHeatmap()">⟳ Refresh Data</button>
+          </div>
+        </div>
+        <div class="heatmap-controls glass">
+          <div class="chart-symbol-pills" id="heatmap-sector-filters">
+            <button class="chart-pill active" onclick="filterHeatmapSector('all')">All Sectors</button>
+            <button class="chart-pill" onclick="filterHeatmapSector('Technology')">Technology</button>
+            <button class="chart-pill" onclick="filterHeatmapSector('Semiconductors')">Semis</button>
+            <button class="chart-pill" onclick="filterHeatmapSector('AI & Cloud')">AI / Cloud</button>
+            <button class="chart-pill" onclick="filterHeatmapSector('Financials')">Financials</button>
+            <button class="chart-pill" onclick="filterHeatmapSector('Healthcare')">Healthcare</button>
+            <button class="chart-pill" onclick="filterHeatmapSector('Energy')">Energy</button>
+            <button class="chart-pill" onclick="filterHeatmapSector('Consumer')">Consumer</button>
+          </div>
+        </div>
+        <div class="heatmap-grid" id="heatmap-container"></div>
+      </div>
+
+      <!-- MICRO-CAP SCREENER TAB -->
+      <div id="tab-screener" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">⚡ Top Movers &amp; Micro-Cap Momentum Screener</h1>
+          <div class="tab-actions">
+            <button class="btn btn-primary" onclick="refreshScreener()">⟳ Screen Now</button>
+            <button class="btn btn-outline" onclick="exportScreenerCSV()">⬇ Export CSV</button>
+          </div>
+        </div>
+        <div class="risk-warning-banner">
+          <span>⚠️</span>
+          <div><strong>MICRO-CAP VOLATILITY &amp; DILUTION RISK WARNING:</strong> Low-float and micro-cap stocks ($2–$9)
+            moving +25%+ carry severe risk of trading halts, extreme spread slippage, and overnight dilution. Never risk
+            unmanaged capital.</div>
+        </div>
+        <div class="screener-toolbar glass">
+          <div class="filter-group">
+            <label>Min Gain %</label>
+            <select id="sc-min-gain" onchange="filterScreener()">
+              <option value="25">+25% or more</option>
+              <option value="15">+15% or more</option>
+              <option value="40">+40% or more</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Price Range</label>
+            <select id="sc-price-range" onchange="filterScreener()">
+              <option value="2-9">$2.00 – $9.00 (Micro-Cap)</option>
+              <option value="0-20">$0.00 – $20.00</option>
+              <option value="all">Any Price</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>13D Rel Vol</label>
+            <select id="sc-rel-vol" onchange="filterScreener()">
+              <option value="1.5">&gt; 1.5x (High Vol)</option>
+              <option value="2.0">&gt; 2.0x (Extreme Vol)</option>
+              <option value="1.0">&gt; 1.0x (Average+)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Search Ticker</label>
+            <input type="search" id="sc-search" placeholder="e.g. SOND, VRAX…" oninput="filterScreener()">
+          </div>
+          <div style="margin-left:auto;font-size:0.75rem;color:var(--text-muted);font-weight:600;"
+            id="sc-count-display">Showing 0 movers</div>
+        </div>
+        <div class="journal-table-wrap glass">
+          <div class="table-scroll">
+            <table class="journal-table">
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Company</th>
+                  <th>Price</th>
+                  <th>Daily Change</th>
+                  <th>Volume</th>
+                  <th>13D Avg Vol</th>
+                  <th>Rel Vol</th>
+                  <th>Market Cap</th>
+                  <th>Catalyst</th>
+                  <th>Risk Flags</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="screener-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEGA-CAP & AI STOCKS TAB -->
+      <div id="tab-megacap" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">🔥 Mega-Cap &amp; AI Stocks on Fire</h1>
+          <div class="tab-actions"><button class="btn btn-primary" onclick="renderMegacap()">⟳ Refresh</button></div>
+        </div>
+        <div class="heatmap-controls glass">
+          <div class="chart-symbol-pills" id="megacap-filters">
+            <button class="chart-pill active" onclick="filterMegacap('all')">All AI &amp; Mega-Caps</button>
+            <button class="chart-pill" onclick="filterMegacap('semis')">Semiconductors</button>
+            <button class="chart-pill" onclick="filterMegacap('mag7')">Mag 7</button>
+            <button class="chart-pill" onclick="filterMegacap('cloud')">AI Cloud &amp; Infra</button>
+            <button class="chart-pill" onclick="filterMegacap('uptrend')">Strong Uptrend Only</button>
+          </div>
+        </div>
+        <div class="ai-stocks-grid" id="megacap-grid"></div>
+      </div>
+
+      <!-- CHARTS TAB (TRADINGVIEW IS DEFAULT) -->
+      <div id="tab-charts" class="tab-content">
+        <div class="tab-header">
+          <div>
+            <h1 class="tab-title">📈 TradingView Live Technical Chart</h1>
+            <div style="font-size: 13.5px; color: var(--text-muted); margin-top: 4px;">Default: S&amp;P 500 Index
+              (INDEX:SPX) · 1m Real-Time Exchange Candlesticks, VWAP &amp; RSI</div>
+          </div>
+          <div class="tab-actions">
+            <span class="disclaimer-badge"
+              style="background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.3);font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;">●
+              CBOE / NASDAQ LIVE FEED</span>
+            <button class="btn btn-outline" id="chart-mode-btn" onclick="toggleChartEngine()">Switch to Canvas
+              Scalper</button>
+          </div>
+        </div>
+        <div class="chart-workspace-container">
+          <div class="chart-header-bar glass"
+            style="padding: 10px 16px; border-radius: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div class="chart-symbol-pills" style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="chart-pill active" onclick="selectChartSymbol('SPX')">SPX (S&amp;P 500)</button>
+              <button class="chart-pill" onclick="selectChartSymbol('SPY')">SPY ETF</button>
+              <button class="chart-pill" onclick="selectChartSymbol('QQQ')">QQQ TECH</button>
+              <button class="chart-pill" onclick="selectChartSymbol('VIX')">VIX VOL</button>
+              <button class="chart-pill" onclick="selectChartSymbol('NVDA')">NVDA</button>
+              <button class="chart-pill" onclick="selectChartSymbol('TSLA')">TSLA</button>
+              <button class="chart-pill" onclick="selectChartSymbol('AAPL')">AAPL</button>
+              <button class="chart-pill" onclick="selectChartSymbol('MSFT')">MSFT</button>
+            </div>
+            <div class="chart-symbol-pills" style="display: flex; gap: 6px;">
+              <button class="chart-pill active" onclick="selectTimeframe('1m')">1m</button>
+              <button class="chart-pill" onclick="selectTimeframe('5m')">5m</button>
+              <button class="chart-pill" onclick="selectTimeframe('15m')">15m</button>
+              <button class="chart-pill" onclick="selectTimeframe('1h')">1h</button>
+              <button class="chart-pill" onclick="selectTimeframe('1D')">1D</button>
+            </div>
+          </div>
+
+          <div id="tv-chart-box" class="chart-canvas-wrapper"
+            style="display: block; width: 100%; height: 800px; padding: 0; overflow: hidden; border-radius: 12px; border: 1.5px solid var(--glass-border); box-shadow: 0 8px 32px rgba(0,0,0,0.25);">
+            <iframe id="tv-iframe"
+              src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_widget&symbol=INDEX:SPX&interval=1&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=131722&studies=%5B%22STD%3BVWAP%22%2C%22STD%3BRSI%22%2C%22STD%3BMACD%22%5D&theme=dark&style=1&timezone=America%2FNew_York&withdateranges=1&showpopupbutton=1"
+              style="width:100%;height:100%;border:none;"></iframe>
+          </div>
+          <div id="canvas-chart-box" class="chart-canvas-wrapper" style="display:none;height:650px;"><canvas
+              id="priceCanvas"></canvas></div>
+        </div>
+      </div>
+
+      <!-- WATCHLIST TAB -->
+      <div id="tab-watchlist" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">⭐ Custom Trading Watchlist</h1>
+          <div class="tab-actions">
+            <button class="btn btn-outline" onclick="exportWatchlistCSV()">⬇ CSV</button>
+            <button class="btn btn-outline" onclick="exportWatchlistJSON()">⬇ JSON</button>
+            <button class="btn btn-outline" onclick="importWatchlistPrompt()">⬆ Import</button>
+          </div>
+        </div>
+        <div class="watchlist-toolbar glass">
+          <div class="watchlist-input-row">
+            <input type="text" id="wl-input" class="watchlist-input" placeholder="TICKER" maxlength="6">
+            <button class="btn btn-primary" onclick="addWatchlistFromInput()">+ Add</button>
+          </div>
+          <div class="chart-symbol-pills" style="margin-left:1rem;">
+            <button class="chart-pill" onclick="loadWatchlistPreset('spx_core')">Preset: SPX Core</button>
+            <button class="chart-pill" onclick="loadWatchlistPreset('ai_leaders')">Preset: AI Momentum</button>
+            <button class="chart-pill" onclick="loadWatchlistPreset('tech_giants')">Preset: Mega Tech</button>
+          </div>
+        </div>
+        <div class="journal-table-wrap glass">
+          <div class="table-scroll">
+            <table class="journal-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Company</th>
+                  <th>Price</th>
+                  <th>Change %</th>
+                  <th>Volume</th>
+                  <th>Rel Vol</th>
+                  <th>Trend</th>
+                  <th>Earnings</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="watchlist-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 0DTE TOOLS TAB -->
+      <div id="tab-tools" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">🎯 0DTE SPX Tools</h1>
+          <div class="tab-actions"><span class="disclaimer-badge">Educational · Not Investment Advice</span></div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card glass">
+            <div class="tool-card-head">
+              <h3>📐 P&L Calculator</h3>
+              <div class="tool-sub">SPX/SPY 0DTE Option Calculator</div>
+            </div>
+            <div class="calc-form">
+              <div class="calc-row">
+                <div class="field"><label>Direction</label><select id="calc-dir">
+                    <option value="call">CALL</option>
+                    <option value="put">PUT</option>
+                  </select></div>
+                <div class="field"><label>Entry Premium ($)</label><input type="number" id="calc-entry" step="0.01"
+                    placeholder="4.50" oninput="updateCalc()"></div>
+              </div>
+              <div class="calc-row">
+                <div class="field"><label>Exit Premium ($)</label><input type="number" id="calc-exit" step="0.01"
+                    placeholder="8.00" oninput="updateCalc()"></div>
+                <div class="field"><label>Contracts</label><input type="number" id="calc-contracts" value="1" min="1"
+                    oninput="updateCalc()"></div>
+              </div>
+              <div class="calc-row">
+                <div class="field"><label>Stop Loss ($)</label><input type="number" id="calc-stop" step="0.01"
+                    placeholder="2.00" oninput="updateCalc()"></div>
+                <div class="field"><label>Target ($)</label><input type="number" id="calc-target" step="0.01"
+                    placeholder="10.00" oninput="updateCalc()"></div>
+              </div>
+            </div>
+            <div class="calc-results" id="calc-results">
+              <div class="calc-result-row"><span>Gross P&L</span><span id="cr-gross">—</span></div>
+              <div class="calc-result-row"><span>Return on Premium</span><span id="cr-rop">—</span></div>
+              <div class="calc-result-row"><span>Max Risk (Stop)</span><span id="cr-risk">—</span></div>
+              <div class="calc-result-row"><span>Target Gain</span><span id="cr-target">—</span></div>
+              <div class="calc-result-row"><span>Risk / Reward</span><span id="cr-rr">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DISCIPLINE TAB -->
+      <div id="tab-discipline" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">🛡️ Discipline Guard</h1>
+          <div class="tab-actions"><button class="btn btn-primary" onclick="runDisciplineCheck()">Run Check Now</button>
+          </div>
+        </div>
+        <div class="discipline-layout">
+          <div class="discipline-rules-col">
+            <div class="rules-panel glass">
+              <div class="section-head">
+                <h2>📋 Your Trading Rules</h2>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">1</div>
+                <div class="rule-body"><strong>1–2 Trades Maximum</strong>
+                  <p>Stop when planned trade limit is reached. Do not force green days.</p>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">2</div>
+                <div class="rule-body"><strong>Never Average Down</strong>
+                  <p>No adding to a losing contract. A cheap option can still go to zero.</p>
+                </div>
+              </div>
+              <div class="rule-item danger">
+                <div class="rule-num">3</div>
+                <div class="rule-body"><strong>No FOMO. No Revenge.</strong>
+                  <p>If you missed the move — let it go. You have another day.</p>
+                </div>
+              </div>
+              <div class="rule-item warn">
+                <div class="rule-num">4</div>
+                <div class="rule-body"><strong>Sideways = Stand Aside</strong>
+                  <p>Overlapping candles burn premium. Cash is a position.</p>
+                </div>
+              </div>
+              <div class="rule-item danger">
+                <div class="rule-num">5</div>
+                <div class="rule-body"><strong>CUT After 15 Min in Loss</strong>
+                  <p>Do NOT hold a losing 0DTE hoping for reversals. Cut and focus next day.</p>
+                </div>
+              </div>
+              <div class="rule-item">
+                <div class="rule-num">6</div>
+                <div class="rule-body"><strong>You Have a Family</strong>
+                  <p>Take small profits. Stay away in sideways markets. Don't count stones losing diamonds.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEWS TAB -->
+      <div id="tab-news" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">📡 Market News &amp; Policy Watch</h1>
+          <div class="tab-actions">
+            <button class="btn btn-primary" onclick="refreshNews()">⟳ Refresh</button>
+            <select class="table-filter" id="news-cat-filter" onchange="filterNews()">
+              <option value="all">All Topics</option>
+              <option value="spx">SPX / Markets</option>
+              <option value="trump">Trump / Policy</option>
+              <option value="fed">Fed / Economic</option>
+              <option value="tech">AI / Tech</option>
+            </select>
+          </div>
+        </div>
+        <div class="news-layout">
+          <div class="news-feed-col">
+            <div class="news-feed-status glass" id="news-feed-status">
+              <span class="status-dot pulsing"></span><span id="news-status-text">Loading news…</span>
+              <span class="news-last-refresh" id="news-last-refresh"></span>
+            </div>
+            <div id="news-list-container"></div>
+          </div>
+          <div class="news-sidebar-col">
+            <div class="news-sources glass">
+              <div class="section-head">
+                <h3>📰 Trusted Sources</h3>
+              </div>
+              <div class="source-links">
+                <a href="https://www.reuters.com/markets/" target="_blank" class="source-link">Reuters Markets</a>
+                <a href="https://www.cnbc.com/markets/" target="_blank" class="source-link">CNBC Markets</a>
+                <a href="https://www.bloomberg.com/markets" target="_blank" class="source-link">Bloomberg</a>
+                <a href="https://www.marketwatch.com/" target="_blank" class="source-link">MarketWatch</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div id="tab-settings" class="tab-content">
+        <div class="tab-header">
+          <h1 class="tab-title">⚙️ Settings &amp; Data Configuration</h1>
+          <div class="tab-actions"><button class="btn btn-primary" onclick="saveSettings()">Save Settings</button></div>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-card glass">
+            <div class="section-head">
+              <h3>📡 Data Configuration</h3>
+            </div>
+            <div class="setting-item">
+              <label>Mode</label>
+              <select class="setting-select" id="set-provider">
+                <option value="demo">High-Fidelity Simulated (Zero Config)</option>
+                <option value="finnhub">Finnhub Free API</option>
+              </select>
+            </div>
+          </div>
+          <div class="settings-card glass">
+            <div class="section-head">
+              <h3>🔗 Google Sheets Integration</h3>
+            </div>
+            <div class="setting-item">
+              <label>Apps Script Web App URL</label>
+              <input type="url" class="setting-input" id="set-gsurl"
+                placeholder="https://script.google.com/macros/s/…/exec">
+            </div>
+          </div>
+          <div class="settings-card glass">
+            <div class="section-head">
+              <h3>💾 Backup &amp; Storage</h3>
+            </div>
+            <div class="setting-item">
+              <button class="btn btn-outline" onclick="exportBackupJSON()">Export All Data (JSON)</button>
+              <button class="btn btn-danger" onclick="clearAllData()" style="margin-left:0.5rem;">Reset All
+                Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // ============================================================
+    // DYNAMIC 2026 CALENDAR, BIG TEXT DAYS, PER-DAY LOGIC
+    // ============================================================
+    let dayTargets = JSON.parse(localStorage.getItem('spx_day_targets') || '{}');
+
+    function refreshCalendarDays() {
+      const today = typeof pstNow === 'function' ? pstNow() : new Date();
+      const year = today.getFullYear(); // 2026
+
+      document.querySelectorAll('.lbl-year').forEach(el => el.textContent = year);
+      const yrHeader = document.getElementById('cal-current-year');
+      if (yrHeader) yrHeader.textContent = year;
+
+      const soy = new Date(year, 0, 1);
+      const eoy = new Date(year, 11, 31);
+      const som = new Date(year, today.getMonth(), 1);
+      const eom = new Date(year, today.getMonth() + 1, 0);
+
+      const total = typeof countTradeDays === 'function' ? countTradeDays(soy, eoy) : 252;
+      const elapsed = typeof countTradeDays === 'function' ? countTradeDays(soy, today) : 203;
+      const leftMonth = typeof countTradeDays === 'function' ? (countTradeDays(today, eom) - (isTradingDay(today) ? 1 : 0)) : 6;
+      const leftYear = typeof countTradeDays === 'function' ? (countTradeDays(today, eoy) - (isTradingDay(today) ? 1 : 0)) : 49;
+      const monthName = today.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+
+      // 1. BIG TEXT ON JOURNAL & CALENDAR
+      const bMonth = document.getElementById('big-month-remaining');
+      const bYear = document.getElementById('big-year-remaining');
+      const bSub = document.getElementById('big-month-name');
+      if (bMonth) bMonth.textContent = `${Math.max(0, leftMonth)} DAYS`;
+      if (bYear) bYear.textContent = `${Math.max(0, leftYear)} DAYS`;
+      if (bSub) bSub.textContent = `${monthName} Sessions Remaining`;
+
+      const bCalMonth = document.getElementById('big-month-left');
+      const bCalYear = document.getElementById('big-year-left');
+      const bCalSub = document.getElementById('big-month-sub');
+      if (bCalMonth) bCalMonth.textContent = `${Math.max(0, leftMonth)} DAYS`;
+      if (bCalYear) bCalYear.textContent = `${Math.max(0, leftYear)} DAYS`;
+      if (bCalSub) bCalSub.textContent = `${monthName} Sessions Remaining`;
+
+      // 2. SMALL TEXT METADATA
+      const annTotal = document.getElementById('annual-total');
+      const annElapsed = document.getElementById('annual-elapsed');
+      if (annTotal) annTotal.textContent = total;
+      if (annElapsed) annElapsed.textContent = elapsed;
+    }
+
+    // Load clicked day into input
+    function loadDateForEdit(dateStr) {
+      const dtInput = document.getElementById('pnl-date');
+      if (dtInput) dtInput.value = dateStr;
+
+      const pnlInput = document.getElementById('pnl-amount');
+      const targetInput = document.getElementById('pnl-target');
+      const noteInput = document.getElementById('pnl-notes');
+
+      const existing = trades.find(t => t.date === dateStr);
+      const storedTarget = dayTargets[dateStr] || 500;
+
+      if (targetInput) targetInput.value = storedTarget;
+      if (existing) {
+        if (pnlInput) pnlInput.value = existing.pnl;
+        if (noteInput) noteInput.value = existing.notes || '';
+      } else {
+        if (pnlInput) pnlInput.value = '';
+        if (noteInput) noteInput.value = '';
+      }
+    }
+
+    // Save Per-Day Entry
+    function saveDayPnlWithTarget() {
+      const dateInput = document.getElementById('pnl-date');
+      const pnlInput = document.getElementById('pnl-amount');
+      const targetInput = document.getElementById('pnl-target');
+      const noteInput = document.getElementById('pnl-notes');
+      const statusEl = document.getElementById('day-log-status');
+
+      const date = dateInput && dateInput.value ? dateInput.value : todayISO();
+      const pnl = parseFloat(pnlInput?.value);
+      const target = parseFloat(targetInput?.value) || 500;
+      const note = noteInput?.value.trim() || (pnl >= 0 ? 'Day Profit' : 'Day Loss');
+
+      if (!date) { alert('Please pick a date.'); return; }
+      if (isNaN(pnl)) { alert('Please enter Achieved P&L (e.g. 500 for win, -250 for loss).'); return; }
+
+      dayTargets[date] = target;
+      localStorage.setItem('spx_day_targets', JSON.stringify(dayTargets));
+
+      trades = trades.filter(t => t.date !== date);
+
+      let statusTag = 'Flat';
+      if (pnl >= target) statusTag = 'Target Achieved';
+      else if (pnl > 0) statusTag = 'Profit';
+      else if (pnl < 0) statusTag = 'Loss Stopped';
+
+      const entry = {
+        id: Date.now(),
+        date: date,
+        target: target,
+        pnl: pnl,
+        status: statusTag,
+        notes: note
+      };
+
+      trades.push(entry);
+      trades.sort((a, b) => (b.date > a.date ? 1 : -1));
+
+      saveData();
+      if (typeof syncGS === 'function') syncGS(entry);
+
+      renderDailyTable();
+      renderCalendar();
+      renderWeekly();
+      renderMonthStats();
+      updateSidePnl();
+      refreshCalendarDays();
+
+      if (statusEl) {
+        statusEl.textContent = `✓ Saved ${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} for ${date}`;
+        statusEl.style.color = pnl >= 0 ? '#10B981' : '#EF4444';
+        setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 3500);
+      }
+
+      if (pnl >= target) {
+        alert(`🎯 TARGET ACHIEVED on ${date} (+$${pnl.toFixed(2)})!\n\nLock session now. Go spend time with your family.`);
+      }
+    }
+
+    // Render Daily Table
+    function renderDailyTable() {
+      const tbody = document.getElementById('daily-table-body');
+      if (!tbody) return;
+
+      if (trades.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:2rem;">No daily entries yet. Use the input bar above to record any day.</td></tr>';
+        return;
+      }
+
+      const weekSums = {};
+      trades.forEach(t => {
+        const d = new Date(t.date + 'T12:00:00');
+        const soy = new Date(d.getFullYear(), 0, 1);
+        const wn = Math.ceil((((d - soy) / 86400000) + soy.getDay() + 1) / 7);
+        const wKey = `W${wn}`;
+        weekSums[wKey] = (weekSums[wKey] || 0) + t.pnl;
+      });
+
+      tbody.innerHTML = trades.map((t, idx) => {
+        const dObj = new Date(t.date + 'T12:00:00');
+        const dayName = dObj.toLocaleDateString('en-US', { weekday: 'short' });
+        const targetVal = t.target || dayTargets[t.date] || 500;
+        const isHit = t.pnl >= targetVal;
+        const pnlColor = t.pnl >= 0 ? '#10B981' : '#EF4444';
+
+        const soy = new Date(dObj.getFullYear(), 0, 1);
+        const wn = Math.ceil((((dObj - soy) / 86400000) + soy.getDay() + 1) / 7);
+        const weekTotal = weekSums[`W${wn}`] || t.pnl;
+        const weekColor = weekTotal >= 0 ? '#10B981' : '#EF4444';
+
+        let statusBadge = `<span style="font-size:12px;font-weight:700;color:var(--text-muted);">Normal</span>`;
+        if (isHit) statusBadge = `<span style="font-size:12px;font-weight:800;background:rgba(16,185,129,0.2);color:#10B981;padding:3px 8px;border-radius:4px;">🎯 TARGET HIT</span>`;
+        else if (t.pnl < 0) statusBadge = `<span style="font-size:12px;font-weight:800;background:rgba(239,68,68,0.2);color:#EF4444;padding:3px 8px;border-radius:4px;">🛑 STOPPED</span>`;
+        else if (t.pnl > 0) statusBadge = `<span style="font-size:12px;font-weight:700;color:#10B981;">+Profit</span>`;
+
+        return `
+      <tr>
+        <td style="font-weight:700;">${t.date}</td>
+        <td style="color:var(--text-dim);font-size:13px;">${dayName}</td>
+        <td style="font-family:'JetBrains Mono',monospace;color:#10B981;font-weight:700;">$${targetVal.toFixed(2)}</td>
+        <td style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:16px;color:${pnlColor};">${t.pnl >= 0 ? '+' : ''}$${t.pnl.toFixed(2)}</td>
+        <td>${statusBadge}</td>
+        <td style="font-family:'JetBrains Mono',monospace;font-weight:800;color:${weekColor};">W${wn}: ${weekTotal >= 0 ? '+' : ''}$${weekTotal.toFixed(2)}</td>
+        <td style="font-size:13.5px;color:var(--text);">${t.notes || '—'}</td>
+        <td>
+          <button class="btn btn-sm btn-outline" onclick="loadDateForEdit('${t.date}')">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteTrade(${t.id})" style="margin-left:4px;">✕</button>
+        </td>
+      </tr>
+    `;
+      }).join('');
+    }
+
+    // Hook calendar clicks
+    const origCalClickHook = typeof calClick === 'function' ? calClick : null;
+    calClick = function (ds) {
+      loadDateForEdit(ds);
+      if (origCalClickHook) origCalClickHook(ds);
+    };
+
+    // TradingView Symbol Mapping
+    const TV_SYMBOLS = {
+      'SPX': 'INDEX:SPX', 'SPY': 'AMEX:SPY', 'QQQ': 'NASDAQ:QQQ', 'DIA': 'AMEX:DIA', 'VIX': 'CBOE:VIX',
+      'NVDA': 'NASDAQ:NVDA', 'TSLA': 'NASDAQ:TSLA', 'AAPL': 'NASDAQ:AAPL', 'MSFT': 'NASDAQ:MSFT'
+    };
+
+    function updateTvWidget() {
+      const iframe = document.getElementById('tv-iframe');
+      if (!iframe) return;
+      const rawSym = (typeof chartState !== 'undefined' && chartState.symbol) ? chartState.symbol : 'SPX';
+      const tvSym = TV_SYMBOLS[rawSym] || `NASDAQ:${rawSym}`;
+      const tf = (typeof chartState !== 'undefined' && chartState.timeframe) ? chartState.timeframe : '1m';
+      const tfMap = { '1m': '1', '5m': '5', '15m': '15', '1h': '60', '1D': 'D' };
+      const interval = tfMap[tf] || '1';
+      const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      iframe.src = `https://s.tradingview.com/widgetembed/?frameElementId=tradingview_widget&symbol=${encodeURIComponent(tvSym)}&interval=${interval}&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=131722&studies=%5B%22STD%3BVWAP%22%2C%22STD%3BRSI%22%2C%22STD%3BMACD%22%5D&theme=${theme}&style=1&timezone=America%2FNew_York&withdateranges=1&showpopupbutton=1`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const d = document.getElementById('pnl-date');
+      if (d && !d.value) loadDateForEdit(todayISO());
+      refreshCalendarDays();
+      renderDailyTable();
+    });
+  </script>
 </body>
+
 </html>

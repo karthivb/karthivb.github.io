@@ -1,0 +1,563 @@
+# Antigravity Project Prompt: SPX Trading Intelligence & Discipline Dashboard
+
+## 1. Project Location and Core Instructions
+
+My existing project is located at:
+
+`C:\Users\kvelu\Desktop\WorkSpace\MyGit\spx`
+
+The root entry point is:
+
+`C:\Users\kvelu\Desktop\WorkSpace\MyGit\spx\index.html`
+
+### Mandatory requirements
+
+- Keep `index.html` in the root directory. Do not move, rename, or replace its location.
+- First inspect all existing files, folders, HTML, CSS, JavaScript, API integrations, and Git configuration.
+- Preserve useful existing functionality and improve it rather than rebuilding blindly.
+- Organize all other files into appropriate folders.
+- Use separate HTML, CSS, JavaScript, configuration, assets, and documentation files where appropriate.
+- Update all relative paths and script references after reorganizing.
+- Make the application responsive for desktop, tablet, and mobile.
+- Do not introduce paid services or APIs unless explicitly approved.
+- Use free APIs and data sources wherever practical.
+- Never expose API keys, passwords, or other secrets in client-side code. Document any required environment variables and setup steps.
+- Do not stop after producing a plan or mockup. Implement the working application, test it, and fix errors.
+
+## 2. Design and User Experience
+
+Build a premium SPX trading intelligence dashboard for active traders, particularly SPX/SPY 0DTE options traders.
+
+Design direction:
+- Sophisticated financial-terminal appearance.
+- Premium editorial layout with subtle slate, charcoal, blue, and restrained green/red accents.
+- Smooth, low-contrast gradients rather than excessive neon or cyberpunk effects.
+- Use gradient text only for major headings.
+- Clear typography, compact data tables, readable charts, useful tooltips, and consistent spacing.
+- Include light/dark mode if practical.
+- Provide a persistent left sidebar or top navigation with multiple tabs.
+- Keep `index.html` as the main dashboard and application entry point.
+- Make all navigation links functional. Do not create empty placeholder tabs.
+
+## 3. Application Navigation
+
+Create these main sections:
+
+1. **Home / SPX Command Center**
+2. **Market Heatmap**
+3. **Top Movers & Micro-Cap Screener**
+4. **Mega-Cap & AI Stocks**
+5. **Market News & Earnings**
+6. **Charts & Technical Indicators**
+7. **Watchlist**
+8. **SPX/SPY 0DTE Trading Tools**
+9. **Trading Discipline & Risk Manager**
+10. **Settings & Data Sources**
+
+Use tabs, a collapsible sidebar, or another clear navigation pattern. The active section must be obvious, and navigation should work without unnecessary full-page reloads.
+
+## 4. Home: SPX Command Center
+
+Build a real-time-style market dashboard displaying:
+
+- SPX index price and daily change.
+- SPY price and daily change.
+- Nasdaq Composite or Nasdaq-100, Dow Jones, and VIX where free data is available.
+- Market status: premarket, open, after-hours, or closed.
+- Today's market open time.
+- Elapsed time since the regular market opened.
+- Time remaining until the regular market closes, including hours, minutes, and seconds.
+- Current New York market time and the user's local Pacific time.
+- Next scheduled market event, when reliable data is available.
+- Top gainers, top losers, unusual volume, and leading sectors.
+- Major market headlines and earnings announcements.
+- A clear market-regime panel indicating potential trending, sideways, or volatile conditions.
+
+Use the US regular trading session, 9:30 AM to 4:00 PM America/New_York, Monday through Friday, while accounting for holidays and early-close sessions.
+
+All clocks and countdowns must update automatically every second. Correctly handle daylight saving time and weekends.
+
+Clearly distinguish live data, delayed data, cached data, and simulated data. Never label delayed or simulated data as real-time.
+
+## 5. Market Heatmap
+
+Create an interactive heatmap showing market performance by sector and stock.
+
+Include, where data is available:
+
+- Technology
+- Semiconductors
+- AI and cloud infrastructure
+- Communication services
+- Consumer discretionary
+- Financials
+- Healthcare
+- Energy
+- Industrials
+
+Prioritize widely followed stocks such as NVDA, AMD, AVGO, MSFT, AAPL, AMZN, META, GOOGL, TSLA, MU, PLTR, ARM, and other relevant companies.
+
+Requirements:
+- Green for positive performance and red for negative performance.
+- Size tiles using market capitalization when reliable data is available.
+- Display ticker, percentage change, and price.
+- Show volume and relative volume in the stock detail view when available.
+- Support sorting and filtering by sector, price change, and market capitalization.
+- Clicking a stock opens a detail panel with a chart, news, and watchlist action.
+
+Clearly label the data timestamp and refresh status.
+
+## 6. Micro-Cap Momentum Screener
+
+Create a dedicated screener for potential high-momentum stocks.
+
+### Default screening criteria
+
+- Stock price: $2 to $9.
+- Daily price increase: at least 25%.
+- Unusually high trading volume.
+- A rolling 13-trading-day volume analysis.
+- Include relative volume, average volume, and today's volume whenever available.
+
+Interpret the 13-day volume condition as a configurable rolling analysis, not a claim that the stock has moved 25% on each of 13 days.
+
+Provide separate filters for:
+- Today's gain of at least 25%.
+- Today's volume relative to the 13-trading-day average.
+- Absolute minimum volume.
+- Relative volume threshold.
+- Minimum and maximum price.
+- Market capitalization.
+- Exchange.
+- Optional premarket gain and volume filters, if supported by the source.
+
+Show these columns:
+
+Ticker | Company | Price | Daily Change % | Volume | 13-Day Average Volume | Relative Volume | Market Cap | Catalyst | Chart | News
+
+Additional requirements:
+- Refresh data at an appropriate rate based on API limits.
+- Include search, sorting, pagination, and CSV export.
+- Show the number of matching stocks.
+- Explain the screening criteria in a help tooltip.
+- Flag low-float, dilution, reverse-split, and liquidity risks when trustworthy data is available.
+- Identify missing data instead of inventing values.
+- Display an appropriate warning about micro-cap volatility, spreads, halts, and potential pump-and-dump activity.
+
+Do not hardcode a static list and present it as today's live screener results.
+
+## 7. Mega-Cap & AI Stocks on Fire
+
+Create a dedicated dashboard for high-momentum large-cap and AI-related stocks.
+
+Track a configurable universe that includes:
+
+- NVDA, AMD, AVGO, MU, TSM, ARM.
+- MSFT, GOOGL, META, AMZN, AAPL.
+- PLTR, TSLA, ORCL, ANET, CRWD, PANW.
+- Additional AI infrastructure, semiconductor, networking, and data-center companies.
+
+Display:
+- Daily percentage change.
+- Five-day and 20-day performance when available.
+- Relative volume.
+- Trend direction.
+- RSI and moving-average relationships.
+- Distance from the day's high and low.
+- Recent earnings date and next earnings date when available.
+- Significant news catalysts.
+
+Create trend classifications such as:
+- Strong uptrend.
+- Bullish momentum.
+- Consolidation.
+- Bearish momentum.
+- Strong downtrend.
+
+Use transparent, configurable rules. Do not describe a stock as being in a confirmed trend based on a single indicator.
+
+## 8. Market News, Breaking News & Earnings
+
+Create a news center that consolidates relevant market information.
+
+Include:
+- SPX and SPY news.
+- Federal Reserve, CPI, PPI, jobs data, Treasury yields, and major economic events.
+- AI and semiconductor stock news.
+- Earnings announcements, earnings surprises, and upcoming earnings dates.
+- Company-specific catalysts affecting the watchlist and momentum screeners.
+- Major political and policy announcements that could affect the market, including relevant US administration announcements.
+
+For every headline, display:
+- Headline.
+- Source.
+- Publication time.
+- Time elapsed since publication, such as “4 min ago.”
+- A short readable summary.
+- Relevant tickers.
+- Sentiment or potential market impact, clearly marked as an estimate.
+- A working link to the original article.
+
+Allow filtering by ticker, topic, source, and recency.
+
+Prioritize reputable, accessible sources and free RSS feeds or APIs. Avoid scraping sites in ways that violate their terms.
+
+Never invent headlines, publication times, summaries, or source links. If a summary cannot be verified, display the headline and link only.
+
+## 9. Charts & Technical Analysis
+
+Build an interactive charting workspace using a suitable free charting library, such as TradingView Lightweight Charts, subject to its current license and capabilities.
+
+Provide:
+- Candlestick charts.
+- Line and area charts.
+- Volume bars.
+- Multiple timeframes supported by the data source.
+- Crosshair and price/time tooltips.
+- Zooming and panning.
+- Chart resizing.
+- Symbol selection.
+- Saved chart layouts where practical.
+
+### Indicators
+
+Implement or integrate the following where supported:
+
+- VWAP.
+- EMA 9 and EMA 21.
+- SMA 20, 50, and 200.
+- RSI.
+- MACD.
+- Bollinger Bands.
+- ATR.
+- Relative volume.
+- Opening Range Breakout (ORB).
+- Previous-day high and low.
+- Premarket high and low.
+- Support and resistance levels.
+
+### Drawing tools
+
+Provide practical drawing functionality where feasible:
+- Horizontal lines.
+- Trendlines.
+- Rectangles.
+- Price-level markers.
+- Text annotations.
+- Support and resistance zones.
+
+Allow users to add, remove, configure, and toggle indicators.
+
+Do not claim to reproduce the complete proprietary TradingView experience. Implement a useful charting workspace using a suitable free library, and clearly document which features are supported.
+
+## 10. Watchlist
+
+Create a customizable watchlist.
+
+Features:
+- Add and remove tickers.
+- Reorder symbols.
+- Track price and percentage changes.
+- Display volume, relative volume, and trend status.
+- Show upcoming earnings dates.
+- Open a chart or related news from each row.
+- Create multiple watchlists, such as SPX Leaders, AI Stocks, Momentum, and Earnings.
+- Save preferences locally in the browser.
+- Import and export watchlists as CSV or JSON.
+
+Provide sensible sample symbols on first launch, clearly identified as example watchlist entries.
+
+## 11. SPX / SPY 0DTE Trading Tools
+
+Build an educational decision-support workspace for SPX and SPY intraday trading.
+
+The dashboard must help evaluate conditions, manage risk, and discourage impulsive entries. It must not promise profits or generate unsupported buy/sell signals.
+
+### A. Market context
+
+Display:
+- Opening range and breakout status.
+- VWAP position.
+- EMA 9/21 alignment.
+- RSI and MACD momentum.
+- Volume confirmation.
+- Previous-day high/low.
+- Premarket high/low when available.
+- VIX context when available.
+- Current price relative to key levels.
+- Trend strength and sideways-market warnings.
+
+### B. Trend score
+
+Create a transparent bullish/bearish score from 1 to 10.
+
+Example:
+- Call-side conditions: C6/10.
+- Put-side conditions: P4/10.
+
+Use configurable rules based on trend, VWAP, EMA alignment, momentum, and volume. Display the contributing factors and their weights.
+
+This score is an indicator-based assessment, not a prediction or a guaranteed trade recommendation.
+
+### C. Opening range
+
+Calculate and display the first 5-, 15-, and 30-minute ranges when intraday data supports them.
+
+Show:
+- Opening range high and low.
+- Breakout or breakdown.
+- Retest status.
+- Volume confirmation.
+- Potential false-breakout warning.
+
+### D. Power hour and sideways-market detection
+
+Highlight:
+- The opening session.
+- Midday conditions.
+- The final hour, commonly called power hour.
+- The final 30 minutes.
+
+Display the current session phase and time remaining in the phase.
+
+Detect potential sideways conditions using configurable measures such as ATR, range compression, VWAP crossings, and moving-average separation.
+
+Do not assume that a particular time guarantees momentum or profitability.
+
+### E. Trade planning calculator
+
+Allow users to enter:
+- Underlying price.
+- Call or put direction.
+- Option entry premium.
+- Number of contracts.
+- Estimated exit premium.
+- Multiplier, defaulting to 100 for standard US equity options.
+- Estimated fees and slippage.
+- Planned stop-loss and profit target.
+
+Calculate:
+- Estimated gross profit/loss.
+- Estimated net profit/loss.
+- Percentage return on premium paid.
+- Maximum planned loss based on the entered stop.
+- Risk/reward ratio.
+- Break-even premium and, where applicable, underlying break-even at expiration.
+
+Clearly explain that option premium estimates do not predict the underlying's movement. Actual results depend on the option contract, volatility, time decay, spread, and execution.
+
+For SPX, remind users that contract specifications differ from SPY. Do not assume SPX and SPY options have identical settlement, exercise, or tax characteristics.
+
+### F. Daily trading limits
+
+Allow users to configure:
+- Daily profit goal.
+- Daily maximum loss.
+- Maximum trades per day.
+- Maximum consecutive losses.
+- Maximum contracts per trade.
+- Maximum risk per trade.
+
+Provide clear visual warnings when a configured limit is reached.
+
+Never automatically place trades or connect to a brokerage account. All trade decisions remain manual.
+
+## 12. Trading Discipline & Behavioral Guardrails
+
+Create a prominent discipline panel that protects capital and encourages deliberate decisions.
+
+Display these reminders:
+- Do not chase FOMO entries.
+- Do not revenge trade after a loss.
+- Do not average down impulsively.
+- Do not increase position size to recover losses.
+- Avoid low-quality entries during sideways markets.
+- Do not trade simply because the market is moving.
+- Respect daily loss and trade-count limits.
+- Protect realized gains rather than giving them back through overtrading.
+
+### Interactive discipline popup
+
+At configurable intervals, display a non-intrusive popup asking:
+
+“Are you waiting for a valid setup, or trading out of FOMO or revenge?”
+
+Provide actions:
+- “I'm waiting for confirmation.”
+- “I'm feeling FOMO.”
+- “I'm trying to recover a loss.”
+- “Take a break.”
+
+If the user selects an emotional-trading option, show a brief pause-and-review checklist before allowing the user to dismiss the warning.
+
+Do not block access to emergency account management or imply that the app can enforce trading discipline inside a brokerage.
+
+### Profit protection
+
+Allow users to configure a daily profit threshold, such as $1,000, and display a prominent reminder when they reach it.
+
+Suggested message:
+
+“You have reached your profit threshold. Consider stopping for the day and protecting your capital. Do not give profits back by overtrading.”
+
+Track a manual trading journal:
+- Trade number.
+- Setup.
+- Entry and exit.
+- Profit or loss.
+- Reason for entry.
+- Emotional state.
+- Rule followed or broken.
+- Notes.
+
+Provide a daily summary and trade-count indicator.
+
+Persist journal data locally, and include export/import functionality. Clearly explain that clearing browser storage may erase locally stored data.
+
+## 13. Free Data Sources & API Strategy
+
+Investigate current free tiers and terms before implementing integrations.
+
+Evaluate appropriate sources, including:
+- Yahoo Finance data through permitted access methods or a suitable data provider.
+- Alpha Vantage.
+- Finnhub.
+- Financial Modeling Prep.
+- Nasdaq or other official market data sources.
+- SEC EDGAR for company filings.
+- Free RSS feeds from reputable financial news providers.
+- Exchange calendars and economic-calendar sources.
+
+These are candidates to evaluate, not a requirement to use every provider.
+
+Important:
+- Verify current API availability, authentication, free-tier limits, redistribution rights, and delayed-data restrictions.
+- Do not assume an API is free or permits browser-side access just because documentation is publicly accessible.
+- Use `fetch` where permitted.
+- Respect CORS, rate limits, caching, and source terms.
+- Implement a provider abstraction so the data source can be changed without rewriting the UI.
+- Cache responses responsibly.
+- Show the last successful refresh and useful error messages.
+- Provide a demo-data mode if an API key is unavailable, clearly marked “DEMO DATA.”
+- Never fabricate live market values to fill missing fields.
+- Keep secrets out of Git and public repositories.
+- If a feature cannot be supported reliably with free data, explain the limitation and implement the best transparent fallback.
+
+## 14. Market Holidays & Session Calendar
+
+Implement a proper US market-session calendar.
+
+Account for:
+- Regular weekdays.
+- US market holidays.
+- Early-close sessions.
+- Daylight saving time.
+- Weekends.
+- Premarket and after-hours periods.
+
+Show the next market opening or closing countdown as appropriate.
+
+Do not rely only on checking whether today is Monday through Friday. Use a reliable exchange calendar or an appropriate maintained calendar source.
+
+## 15. Technical Architecture & File Organization
+
+Keep the root `index.html` unchanged in location.
+
+Organize the project into a structure similar to the following, adapting it to existing files and build tools:
+
+spx/
+- index.html
+- README.md
+- .gitignore
+- assets/
+  - icons/
+  - images/
+- css/
+  - main.css
+  - layout.css
+  - components.css
+  - charts.css
+  - responsive.css
+- js/
+  - app.js
+  - navigation.js
+  - config.js
+  - services/
+    - market-data.js
+    - news-service.js
+    - earnings-service.js
+    - market-calendar.js
+  - components/
+    - dashboard.js
+    - heatmap.js
+    - stock-screener.js
+    - ai-stocks.js
+    - news.js
+    - charts.js
+    - watchlist.js
+    - trading-tools.js
+    - discipline.js
+  - utils/
+    - formatting.js
+    - calculations.js
+    - storage.js
+- docs/
+  - API_SETUP.md
+  - FEATURES.md
+
+Use this as a suggested structure, not a reason to create unnecessary files.
+
+Preserve existing Git history and repository configuration. Do not initialize a new repository if one already exists.
+
+If the current project uses a build system or framework, retain it where practical. If it is a simple static HTML application, favor a lightweight solution that works with GitHub Pages.
+
+## 16. GitHub Pages Compatibility
+
+The application must remain deployable as a static GitHub Pages site wherever practical.
+
+Requirements:
+- Keep the root `index.html`.
+- Use correct relative asset paths.
+- Avoid server-only dependencies unless a clearly documented alternative exists.
+- Do not assume environment variables can be securely hidden in client-side JavaScript.
+- Explain any provider integrations that require a secure backend.
+- Ensure navigation, CSS, JavaScript, and static assets load from a repository subpath.
+- Avoid absolute paths that only work on the local Windows machine.
+- Provide a README with exact deployment instructions.
+
+## 17. Quality Assurance
+
+After implementation:
+
+1. Inspect all existing project files before editing.
+2. Produce a brief implementation plan.
+3. Organize the project while preserving the root `index.html`.
+4. Implement the dashboard and functional navigation.
+5. Connect the supported data providers.
+6. Validate data freshness and calculations.
+7. Test the countdown across open, closed, holiday, and early-close sessions.
+8. Test all filters, sorting, charts, drawing controls, watchlist actions, and calculators.
+9. Test the discipline popup and local persistence.
+10. Check browser-console errors and broken asset paths.
+11. Test responsive layouts.
+12. Validate GitHub Pages relative paths and deployment compatibility.
+13. Fix discovered issues before finishing.
+
+Do not claim that a feature works unless it has been implemented and tested. Clearly distinguish completed features, partially supported features, and features that require API keys or external services.
+
+## 18. Final Deliverables
+
+When finished, provide:
+
+1. A summary of the existing project and what changed.
+2. The final folder and file structure.
+3. Confirmation that `index.html` remains at the project root.
+4. A list of implemented features.
+5. A list of free APIs used and their limitations.
+6. Exact API-key setup instructions, if required.
+7. Exact steps to run the application locally on Windows.
+8. Exact steps to publish or update the existing GitHub Pages site.
+9. A list of tests performed and their results.
+10. Any remaining limitations or features that need further work.
+
+**Final objective:** Build a useful, polished SPX trading command center that combines market intelligence, stock screening, heatmaps, charts, news, watchlists, 0DTE planning, and behavioral risk management in one organized application, while preserving the existing root `index.html` and keeping the project as free and maintainable as possible.
